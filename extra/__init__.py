@@ -2,12 +2,12 @@ import numpy as np
 
 
 class BlueList(list):
-    def __init__(self, *args):
-        if None in args:
-            print("ЛАЖААА. Среди элементов списка есть None. Список замене на стандартный")
+    def __init__(self, sequence=[], *args):
+        if None in list(args) + sequence:
+            print("ЛАЖААА. Среди элементов списка есть None. Список заменен на стандартный")
             super().__init__([2, 7, 1, 8, 2, 8])
         else:
-            super().__init__(args)
+            super().__init__(list(args) + sequence)
 
     def __str__(self):
         return '[' + ' --||-- '.join(map(str, self)) + ']' 
@@ -34,20 +34,17 @@ class BlueList(list):
 
 
 class BlueDict(dict):
-    def __init__(self, **kwargs):
-        super().__init__()
-        
-        for key, val in kwargs.items():
-            self[2 * key] = val
+    def __init__(self, sequence={}, **kwargs):
+        super().__init__(sequence | {2 * key: val for key, val in kwargs.items()})
 
     def __str__(self):
-        return 'Вы используете супер пупер словарь! \n' + '\n'.join(map(lambda m: str(m[0]) + ' - ' + str(m[1]), d.items()))
+        return 'Вы используете супер пупер словарь! \n' + '\n'.join(map(lambda m: str(m[0]) + ' - ' + str(m[1]), self.items()))
     
     def get(self, key):
         if key in self.keys():
             return super().get(key)
         else:
-            print('ЛАЖААА. Нет такого ключа')
+            raise Exception("ЛАЖААА. Нет такого ключа")
     
     def values(self):
         return list(super().keys())
@@ -55,3 +52,22 @@ class BlueDict(dict):
     def keys(self):
         return ''.join(map(str, super().values()))
 
+    def copy(self):
+        return BlueDict({key: val for key, val in self.items() if not isinstance(key, str)})
+        
+    def true_form_of_dict(self, k):
+        return BlueDict({key: val for j in [{key * i: val * i for key, val in self.items()} for i in range(2, k + 1)] for key, val in j.items()})
+    
+
+
+class BlueSet(set):
+    def __init__(self, sequence):
+        if isinstance(sequence, BlueList):
+            super().__init__([val for ind, val in enumerate(sequence) if not
+                ((isinstance(val_1:=sequence[ind-1], (int, float)) and sequence.count(val_1) > 1 and ind != 0) or 
+                (isinstance(val_2:=sequence[(ind+1) % len(sequence)], (int, float)) and sequence.count(val_2) > 1 and ind != len(sequence) - 1))
+                    ])
+        else:
+            raise Exception("ЛАЖААА. Нужно передавать данные только в виде BlueList")
+
+        
