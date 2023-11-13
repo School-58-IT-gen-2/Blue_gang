@@ -1,6 +1,12 @@
 import numpy as np
 
 
+class LazhaException(Exception):
+    pass 
+
+class VeryLazhaException(LazhaException):
+    pass
+
 class BlueList(list):
     def __init__(self, sequence=[], *args):
         if None in list(args) + sequence:
@@ -44,7 +50,7 @@ class BlueDict(dict):
         if key in self.keys():
             return super().get(key)
         else:
-            raise Exception("ЛАЖААА. Нет такого ключа")
+            raise LazhaException("ЛАЖААА. Нет такого ключа")
     
     def values(self):
         return list(super().keys())
@@ -68,6 +74,6 @@ class BlueSet(set):
                 (isinstance(val_2:=sequence[(ind+1) % len(sequence)], (int, float)) and sequence.count(val_2) > 1 and ind != len(sequence) - 1))
                     ])
         else:
-            raise Exception("ЛАЖААА. Нужно передавать данные только в виде BlueList")
+            raise VeryLazhaException("ЛАЖААА. Нужно передавать данные только в виде BlueList")
 
         
