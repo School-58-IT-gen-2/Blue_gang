@@ -47,9 +47,9 @@ class BlueDict(dict):
         return 'Вы используете супер пупер словарь! \n' + '\n'.join(map(lambda m: str(m[0]) + ' - ' + str(m[1]), self.items()))
     
     def get(self, key):
-        if key in self.keys():
+        try:
             return super().get(key)
-        else:
+        except Exception:
             raise LazhaException("ЛАЖААА. Нет такого ключа")
     
     def values(self):
