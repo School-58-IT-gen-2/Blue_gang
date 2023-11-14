@@ -22,5 +22,7 @@ class Board:
     def get_figures(self):
         return self.figures
     
-
+board = Board()
+fig = board.white_figures[9]
+print(fig.get_attack_positions())
 

@@ -106,17 +106,41 @@ class Pawn(Figure):
                 self.get_figure(x, y).kill()
             super().move(x, y)
             return f"{self.name}. Новая позиция - {x}, {y}"
-            
-            
-        
-                
-                
-                
-        
+    
 
 class Rook(Figure):
     def __init__(self, x: int, y: int, color: str = 'white'):
-        super().__init__(x, y, color, "Rook")
+        super().__init__(x, y, color, "Rook") 
+        
+    def get_attack_positions(self):
+        array = []
+        i = 0
+        while self.x + i < 8:
+            if self.is_empty(self.x + i, self.y):
+                array.append((self.x + i, self.y))
+            elif self.is_opponent(self.x + i, self.y):
+                array.append((self.x + i, self.y))
+                break 
+            i += 1 
+        
+        i = 0
+        while self.x - i > 1:
+            if self.is_empty(self.x - i, self.y):
+                array.append((self.x - i, self.y))
+            elif self.is_opponent(self.x - i, self.y):
+                array.append((self.x - i, self.y))
+                break 
+            i += 1 
+        
+        while self.y - i > 0:
+            if self.is_empty(self.x, self.y - i):
+                array.append((self.x, self.y - i))
+            elif self.is_opponent(self.x, self.y - i):
+                array.append((self.x, self.y - i))
+                break 
+            i += 1
+            
+        return array
         
     
 class Knight(Figure):
