@@ -339,8 +339,10 @@ class King(Figure):
             (self.x, self.y - 1)
         ]
 
-        for x, y in coordinates:
+        for x, y in coordinates_to_check:
             try:
                 if self.is_empty(x, y) or self.is_opponent(x, y):
                     array.append((x, y))
-            except Coor
+            except CoordinateException:
+                pass 
+        return array

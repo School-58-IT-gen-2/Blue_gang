@@ -6,8 +6,10 @@ class LazhaException(Exception):
         self.reason = reason 
         super().__init__(f"ЛАЖААА. {reason}")
 
+
 class VeryLazhaException(LazhaException):
     pass
+
 
 class BlueList(list):
     def __init__(self, sequence=[], *args):
