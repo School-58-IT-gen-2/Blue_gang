@@ -4,9 +4,8 @@ import random
 # uci используется для вывода ходов в привычном виде
 
 def get_random_move(board):
-  legal_moves = [move for move in board.legal_moves] # все ВОЗМЖНЫЕ ходы
-  print(random.choice(legal_moves)) # рандомный ВОЗМОЖНЫЙ ход
-  return random.choice(legal_moves)
+  legal_moves = [move for move in board.legal_moves] # ВОЗМОЖНЫЙ ход
+  return random.choice(legal_moves)  # рандомный ВОЗМОЖНЫЙ ход
 
 
 def get_move(player_move):
