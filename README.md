@@ -1,5 +1,5 @@
 # Readmishki
-[![Текст с описанием картинки](logo.png)]
+![Текст с описанием картинки](logo.png)
 Супер Шахматы - это лучшая браузерная игра на свете, написанная на Python, JavaScript, HTML, CSS
 ## Documentation
 The small documentation located here:
