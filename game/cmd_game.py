@@ -2,12 +2,16 @@ from classes.board import Board
 from classes.exception import *
 
 
+mode = input()
+if mode == 'new':
+    board = Board()
+else:
+    try:
+        board = Board()
 
-board = Board()
 moves = ['Ход белых  ', 'Ход черных  ']
 colors = ['white', 'black']
 i = 0
-
 print(board)
 while board.game_is_going():
     try:
