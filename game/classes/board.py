@@ -1,8 +1,6 @@
 from .figure import *
 from .symbols import *
 
-import base64
-
 
 class Board:
     def __init__(self, default_positions=True):
@@ -37,40 +35,42 @@ class Board:
 
     # Строковый вывод доски
     def __str__(self):
-        board = [[' ' for _ in range(8)] for __ in range(8)] 
-        
+        board = [[" " for _ in range(8)] for __ in range(8)]
+
         # Из каждой фигуры делаем символы
         for figure in self.get_figures():
             if figure.is_alive():
-                board[8 - (figure.x)][figure.y - 1] = SYMBOLS[figure.color + '_' + figure.name.lower()]
+                board[8 - (figure.x)][figure.y - 1] = SYMBOLS[
+                    figure.color + "_" + figure.name.lower()
+                ]
 
-        return '\n'.join([''.join(s) for s in board])
+        return "\n".join(["".join(s) for s in board])
 
     def get_figures(self):
-        return self.figures 
-    
-    #Ход фигуры из x1 y1 в x2 y2
+        return self.figures
+
+    # Ход фигуры из x1 y1 в x2 y2
     def move(self, x1, y1, x2, y2, user_friendly=True):
         for figure in self.get_figures():
             if figure.get_coordinates() == (x1, y1) and figure.is_alive():
                 return figure.move(x2, y2, user_friendly=user_friendly)
         else:
             raise FigureNotFoundException(x1, y1)
-        
+
     # Возвращает доступные позиции для атаки фигуры с координатами x y
     def get_attack_positions(self, x, y):
         for figure in self.get_figures():
             if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure.get_attack_positions()
-        
+
     # Проверка, на идет ли игра еще (живы ли все короли)
     def game_is_going(self):
         for figure in self.get_figures():
             if isinstance(figure, King):
                 if not figure.is_alive():
-                    return False 
+                    return False
         return True
-    
+
     # Возвращает победителя
     def who_is_winner(self):
         alive_kings = []
@@ -78,13 +78,13 @@ class Board:
             if isinstance(figure, King):
                 if figure.is_alive():
                     alive_kings.append(figure.color)
-        
+
         if len(alive_kings) in [0, 2]:
-            return None 
+            return None
         else:
             return alive_kings[0]
-    
-    '''
+
+    """
     Кодирует состояние доски
     Весь код состоит из групп по 4 символа
     1. Число от 0 до 5 - названия фигур
@@ -92,31 +92,34 @@ class Board:
     3. Координата x
     4. Координата y. 
     Убитые фигуры не учитывает. Справочный материал в symbols.py
-    '''
+    """
+
     def encode(self):
-        s = ''
+        s = ""
         for figure in self.get_figures():
             if figure.is_alive():
-                s += FIGURES_TO_NUMBERS[figure.name.lower()] 
+                s += FIGURES_TO_NUMBERS[figure.name.lower()]
                 s += figure.color.lower()[0]
                 s += str(figure.get_coordinates()[0]) + str(figure.get_coordinates()[1])
-        return s 
-    
+        return s
+
     # Возвращает фигуру на позиции x y
     def get_figure_by_position(self, x, y):
         for figure in self.get_figures():
             if figure.get_coordinates() == (x, y) and figure.is_alive():
-                return figure 
-    
+                return figure
+
     # Декодирует состояние доски
     def decode(self, code):
         m = []
         for i in range(0, len(code), 4):
-            m.append(eval(
-                f'{NUMBERS_TO_FIGURES[code[i]].capitalize()}({code[i + 2]}, {code[i + 3]}, "{code[i + 1]}" )'
-                ))
-        
-        return m 
+            m.append(
+                eval(
+                    f'{NUMBERS_TO_FIGURES[code[i]].capitalize()}({code[i + 2]}, {code[i + 3]}, "{code[i + 1]}" )'
+                )
+            )
+
+        return m
 
     # Устанавливает фигуры (если они не были установлены по дефолту)
     def set_figures(self, code):
@@ -127,23 +130,14 @@ class Board:
             self.black_figures = []
 
             for figure in figures:
-                if figure.color == 'white':
+                if figure.color == "white":
                     self.white_figures.append(figure)
                 else:
                     self.black_figures.append(figure)
-            
+
             self.figures = self.white_figures + self.black_figures
 
             for figure in self.figures:
-                    figure.set_other_figures(self.figures)  
+                figure.set_other_figures(self.figures)
         except:
             raise CodeException()
-        
-
-    
-    
-
-    
-
-
-
