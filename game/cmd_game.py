@@ -16,6 +16,9 @@ def game():
         except CodeException:
             print("Лажа с кодом")
             return -1
+        except:
+            print("Странная лажа")
+            return -1
 
     moves = ["Ход белых  ", "Ход черных  "]
     colors = ["white", "black"]
