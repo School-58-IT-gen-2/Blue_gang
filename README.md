@@ -2,7 +2,8 @@
 [![Текст с описанием картинки](logo.png)](https://github.com/AbraTema/Readmishki/blob/main/logo.png)
 Super Chess is the best browser game in the world, written by Python, JavaScript, HTML, CSS
 ## Documentation
-The small documentation located here:
+The small documentation:
+don't be stupid and everything will work
 
 ## Rules of the game
 <details>
