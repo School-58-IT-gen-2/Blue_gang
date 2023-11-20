@@ -1,3 +1,4 @@
+# Символьные представления фигур
 SYMBOLS = {
     'white_pawn': '♙',
     'white_rook': '♖',
@@ -14,6 +15,7 @@ SYMBOLS = {
     'black_king': '♚',
 }
 
+# Перевод из названия фигуры в номер
 FIGURES_TO_NUMBERS = {
     'pawn': '0',
     'rook': '1',
@@ -23,6 +25,7 @@ FIGURES_TO_NUMBERS = {
     'king': '5'
 }
 
+# Перевод из номера в название фигуры
 NUMBERS_TO_FIGURES = {
     '0': 'pawn',
     '1': 'rook',

@@ -24,6 +24,7 @@ class Figure:
     def __repr__(self):
         return f"{self.name}: {self.x}, {self.y}"
 
+    
     def move(self, x, y, user_friendly=True):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
@@ -44,6 +45,7 @@ class Figure:
         else:
             raise CoordinateException(x, y)
 
+    # При создании доски сюда добавляются все фигуры на ней
     def set_other_figures(self, array):
         self.other_figures = array
 
@@ -56,6 +58,7 @@ class Figure:
     def get_coordinates(self):
         return self.x, self.y
 
+    # Проверяет пуста ли ячейка с нужными координатами
     def is_empty(self, x: int, y: int):
         if not (isinstance(x, int) and isinstance(y, int)) or not (x in range(1, 9) and y in range(1, 9)):
             raise CoordinateException(x, y)
@@ -64,7 +67,7 @@ class Figure:
                 return False
         return True
 
-
+    # Проверяет, находится ли союзник в нужных координатах
     def is_teammate(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
@@ -79,6 +82,7 @@ class Figure:
                 return True
         return False
 
+    # Проверяет, находится ли противник в нужных координатах
     def is_opponent(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
@@ -93,6 +97,7 @@ class Figure:
                 return True
         return False
 
+    # Возвращает фигуру с нужными координатами
     def get_figure(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
@@ -101,15 +106,16 @@ class Figure:
         for figure in self.other_figures:
             if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure
-        return None
 
+    # Умирает при поедании
     def kill(self):
         self.alive = False
 
+    # Жива или нет
     def is_alive(self):
         return self.alive
 
-
+# Пешка
 class Pawn(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Pawn")
@@ -165,7 +171,7 @@ class Pawn(Figure):
                     pass
         return array
 
-
+# Башенка
 class Rook(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Rook")
@@ -219,7 +225,7 @@ class Rook(Figure):
 
         return array
 
-
+# Пони
 class Knight(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Knight")
@@ -246,7 +252,7 @@ class Knight(Figure):
 
         return array
 
-
+# Ферзь 
 class Bishop(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Bishop")
@@ -300,7 +306,7 @@ class Bishop(Figure):
 
         return array
 
-
+# Королева
 class Queen(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Queen")
@@ -398,7 +404,7 @@ class Queen(Figure):
 
         return array
 
-
+# Король
 class King(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "King")

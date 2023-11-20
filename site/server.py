@@ -4,8 +4,8 @@ from flask_cors import CORS
 
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from game.classes.board import Board
 from game.classes.exception import CodeException
 
@@ -17,6 +17,9 @@ socketio = SocketIO(app)
 
 board = None
 
+
+
+# Доступ к mainPage.html через url /. Остальные страницы ниже аналогично
 @app.route('/')
 def mainPage():
     return render_template('mainPage.html')
@@ -37,6 +40,7 @@ def error():
 def win():
     return render_template('winPage.html')
 
+# Доступ к файлам из необходимой директории по url
 @app.route('/site/js/<filename>')
 def uploaded_js(filename):
     return send_from_directory('js', filename)
@@ -49,12 +53,13 @@ def uploaded_css(filename):
 def uploaded_res(filename):
     return send_from_directory('res', filename)
 
-
+# Общение с клиентом
 @socketio.on('message_from_client')
 def handle_message(message):
     global board  
     print('Message from client:', message)
     
+    # Запуск игры
     if 'start' in message:
         if message.split('|')[1] == 'default':
             board = Board()
@@ -65,18 +70,22 @@ def handle_message(message):
             print(board)
             socketio.emit('message_from_server', 'Доска создана')  
 
+    # Возвращает закодированное положение дефолтных фигур
     elif message == 'get_new_figures':
         socketio.emit('message_from_server', board.encode())
 
+    # Возвращает доступные ходы
     elif 'get_attack_positions' in message:
         id = list(map(int, message.split('|')[1].split('_')))
         socketio.emit('message_from_server', board.get_attack_positions(*id))
 
+    # Двигает фигуру
     elif 'move' in message:
         x1, y1 = list(map(int, message.split('|')[1].split('_')))
         x2, y2 = list(map(int, message.split('|')[2].split('_')))
         socketio.emit('message_from_server', board.move(x1, y1, x2, y2, False))
     
+    # Возвращает цвет фигуры
     elif 'get_color' in message:
         x, y = list(map(int, message.split('|')[1].split('_')))
         figure = board.get_figure_by_position(x, y)
@@ -85,12 +94,14 @@ def handle_message(message):
         except AttributeError:
             socketio.emit('message_from_server', None)
 
+    # Устанавливает фигуры в зависимости от принимаемого кода
     elif 'set_figures' in message:
         try:
             board.set_figures(message.split('|')[1])
         except CodeException:
             socketio.emit('message_from_server', 'ERROR')
 
+    # Возвращает закодированное положение фигур
     elif 'encode' in message:
         socketio.emit('message_from_server', board.encode())
        
