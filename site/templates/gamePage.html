@@ -1,126 +1,132 @@
+<!-- Основная страница с игрой -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/site/css/board.css">
-    <link rel="stylesheet" type="text/css" href="/site/css/figures.css">
-    <link rel="stylesheet" type="text/css" href="/site/css/game_page.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/site/css/board.css" />
+    <link rel="stylesheet" type="text/css" href="/site/css/figures.css" />
+    <link rel="stylesheet" type="text/css" href="/site/css/game_page.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <title>Знаете чем шахматист отличается от пенсионера?</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="chessboard_div">
-        <table id="chessboard"></table>
+      <table id="chessboard"></table>
     </div>
 
     <a id="nowMove"> Сейчас ход белых</a>
+    <!-- Показывает чей ход -->
 
     <button id="save">Сохранить</button>
+    <!-- Кнопка сохранения прогресса -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="/site/js/generateBoard.js"></script>
     <script src="/site/js/movement.js"></script>
     <script>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
-        let lastReceivedData = null;
-        let attackPositions = null;
-        let selectedPosition = null;
-        let nowMove = 'white';
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get("code");
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+      let lastReceivedData = null; // Последняя информация, полученная с сервера
+      let attackPositions = null; // Доступные клетки дял атаки
+      let selectedPosition = null; // Выбранная клетка
+      let nowMove = "white"; // Чей сейчас ход
+      const urlParams = new URLSearchParams(window.location.search); // URL параметры
+      const code = urlParams.get("code"); // Код игры (если есть, иначе null)
 
-        
+      // Подключение к серверу. Процесс зависит от того, это новая игра, или по коду
+      socket.on("connect", function () {
+        console.log("Connected to server");
+        if (code != null) {
+          sendMessage("start|custom")
+            .then(() => sendMessage("set_figures|" + code))
+            .then(() => checkFigureError())
+            .then(() => generateChessboard())
+            .then(() => setFigures(decrypt(code)))
+            .then(() => (lastReceivedData = null))
+            .catch((error) => console.error("Error:", error));
+        } else {
+          sendMessage("start|default")
+            .then(() => sendMessage("get_new_figures"))
+            .then(() => generateChessboard())
+            .then(() => setFigures(decrypt(lastReceivedData)))
+            .then(() => (lastReceivedData = null))
+            .catch((error) => console.error("Error:", error));
+        }
+      });
 
-        socket.on('connect', function() {
-            console.log('Connected to server');
-            if (code != null){
-                sendMessage('start|custom')
-                    .then(() => sendMessage('set_figures|' + code))
-                    .then(() => checkFigureError())
-                    .then(() => generateChessboard())
-                    .then(() => setFigures(decrypt(code)))
-                    .then(() => lastReceivedData = null)
-                    .catch((error) => console.error('Error:', error));
-            }
-            else{
-                sendMessage('start|default')
-                    .then(() => sendMessage('get_new_figures'))
-                    .then(() => generateChessboard())
-                    .then(() => setFigures(decrypt(lastReceivedData)))
-                    .then(() => lastReceivedData = null)
-                    .catch((error) => console.error('Error:', error));
-            }
+      // Запоминаем последнее сообщение с сервера
+      socket.on("message_from_server", function (message) {
+        lastReceivedData = message;
+      });
+
+      // Отправляем сообщение на сервер
+      function sendMessage(message) {
+        return new Promise((resolve, reject) => {
+          socket.emit("message_from_client", message);
+          setTimeout(() => {
+            resolve();
+          }, 1000);
         });
+      }
 
+      function getLastReceivedData() {
+        return lastReceivedData;
+      }
 
-        socket.on('message_from_server', function(message) {
-            lastReceivedData = message
-        });
+      function setLastReceivedData(data) {
+        lastReceivedData = data;
+      }
 
-        function sendMessage(message) {
-            return new Promise((resolve, reject) => {
-                socket.emit('message_from_client', message);
-                setTimeout(() => {
-                    resolve();
-                }, 1000);
-            });
+      function setAttackPositions(positions) {
+        attackPositions = positions;
+      }
+
+      function getAttackPositions() {
+        return attackPositions;
+      }
+
+      function setSelectedPosition(positions) {
+        selectedPosition = positions;
+      }
+
+      function getSelectedPosition() {
+        return selectedPosition;
+      }
+
+      // Передаем ход
+      function changeNowMove() {
+        if (nowMove == "white") {
+          nowMove = "black";
+          document.getElementById("nowMove").textContent = "Сейчас ход черных";
+        } else {
+          nowMove = "white";
+          document.getElementById("nowMove").textContent = "Сейчас ход белых";
         }
+      }
 
-        function getLastReceivedData(){
-            return lastReceivedData
+      function getNowMove() {
+        return nowMove;
+      }
+
+      function checkFigureError() {
+        if (getLastReceivedData() == "ERROR") {
+          window.location.href = "error";
         }
+      }
 
-        function setLastReceivedData(data){
-            lastReceivedData = data
-        }
-
-        function setAttackPositions(positions){
-            attackPositions = positions
-        }
-
-        function getAttackPositions(){
-            return attackPositions
-        }
-
-        function setSelectedPosition(positions){
-            selectedPosition = positions
-        }
-
-        function getSelectedPosition(){
-            return selectedPosition
-        }
-
-        function changeNowMove(){
-            if (nowMove == 'white'){
-                nowMove = 'black'
-                document.getElementById('nowMove').textContent = "Сейчас ход черных"
-            }
-            else {
-                nowMove = 'white'
-                document.getElementById('nowMove').textContent = "Сейчас ход белых"
-            }
-        }
-
-        function getNowMove(){
-            return nowMove
-        }
-        
-        function checkFigureError(){
-            if (getLastReceivedData() == "ERROR"){
-                window.href = ''
-            }
-        }
-
-        document.getElementById('save').addEventListener("click", function () {
-            sendMessage('encode')
-            .then(() => window.location.href = "save?code=" + getLastReceivedData())
-    })
-
+      // Сохранение прогресса
+      document.getElementById("save").addEventListener("click", function () {
+        sendMessage("encode").then(
+          () => (window.location.href = "save?code=" + getLastReceivedData())
+        );
+      });
     </script>
-</body>
+  </body>
 </html>
