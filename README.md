@@ -4,6 +4,12 @@ Super Chess is the best browser game in the world, written by Python, JavaScript
 ## Documentation
 The small documentation:
 don't be stupid and everything will work
+To download the necessary libraries:
+```python
+pip install Flask
+pip install flask_socketio
+pip install flask_cors
+```
 
 ## Rules of the game
 <details>
