@@ -1,0 +1,28 @@
+#chessboard_div {
+    position: absolute;
+    top: 45vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+td {
+    width: 75px; 
+    height: 75px
+}
+
+td:hover {
+    background-color: #7C0902
+}
+
+.black {
+    background-color: #343434
+}
+
+.white {
+    background-color: #E0AB76
+}
+
+
+.attack_position {
+    background-color: rgba(0, 255, 0, 0.3);
+}

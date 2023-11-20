@@ -1,0 +1,25 @@
+body {
+  background-color: white; /* Цвет фона */
+  font-family: "Rubik", sans-serif; /* Шрифт */
+}
+
+
+#startGameButton {
+    position: absolute;
+    top: 30vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 20%;
+    font-size: 20pt;
+}
+
+#inputCode {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 20%;
+  font-size: 20pt;
+}

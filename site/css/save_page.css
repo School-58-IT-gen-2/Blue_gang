@@ -1,0 +1,31 @@
+body {
+    background-color: white; /* Цвет фона */
+    font-family: "Rubik", sans-serif; /* Шрифт */
+}
+
+#title {
+    color: black; /* Цвет текста */
+    font-size: 50pt; /* Размер шрифта */
+    position: absolute;
+    top: 20vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+#subTitle {
+    color: #343434; /* Цвет текста */
+    font-size: 25pt; /* Размер шрифта */
+    position: absolute;
+    top: 35vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+#code {
+    color: black; /* Цвет текста */
+    font-size: 13pt; /* Размер шрифта */
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}

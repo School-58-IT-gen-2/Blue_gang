@@ -1,0 +1,21 @@
+body {
+    background-color: white; /* Цвет фона */
+    font-family: "Rubik", sans-serif; /* Шрифт */
+}
+
+
+#nowMove {
+    color: black;
+    font-size: 52pt; 
+    position: absolute;
+    top: 90vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+#save {
+    position: absolute;
+    top: 50vh;
+    left: 80vw;
+    transform: translate(-50%, -50%);
+}

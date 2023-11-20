@@ -1,0 +1,20 @@
+body {
+    background-color: white; /* Цвет фона */
+    font-family: "Rubik", sans-serif; /* Шрифт */
+}
+
+#errorText {
+    position: absolute;
+    top: 35vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    font-size: 40pt;
+}
+
+#toMain {
+    position: absolute;
+    top: 55vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    font-size: 25pt;
+}
