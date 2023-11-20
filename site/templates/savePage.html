@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/site/css/save_page.css">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+    <title>Шахматы - сохранение</title>
+</head>
+<body>
+    <p id="title">Код для сохранения</p>
+    <p id="subTitle">Нажмите на него для сохранения</p>
+    <p id="code" onclick="copyText()"></p>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    const codeText = document.getElementById('code')
+    codeText.innerHTML = code
+
+    function copyText() {
+        let text = document.getElementById("code")
+        let tmp = document.createElement("input")
+        tmp.value = text.textContent
+
+        document.body.appendChild(tmp)
+        tmp.select()
+        document.execCommand("copy")
+        document.body.removeChild(tmp)
+        
+}
+        
+</script>
+</html>
