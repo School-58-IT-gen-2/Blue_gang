@@ -1,6 +1,6 @@
-# Readmishki
-![Текст с описанием картинки](logo.png)
-Супер Шахматы - это лучшая браузерная игра на свете, написанная на Python, JavaScript, HTML, CSS
+# Super Chess
+[![Текст с описанием картинки](logo.png)](https://github.com/AbraTema/Readmishki/blob/main/logo.png)
+Super Chess is the best browser game in the world, written by Python, JavaScript, HTML, CSS
 ## Documentation
 The small documentation located here:
 
@@ -130,6 +130,9 @@ The small documentation located here:
 </details>
 
 
+## User reviews
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&random=false&width=435&lines=Matvey+says+%22%D0%9B%D0%B0%D0%B0%D0%B0%D0%B0%D0%B0%D0%B6%D0%B0%D0%B0%D0%B0%D0%B0%D0%B0%22;Temocka+says+%22%D0%A5%D0%BE%D1%82%D1%8F+%D0%B1%D1%8B+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82%22;Maksim+says+%22%D0%AF+%D0%B4%D1%83%D0%BC%D0%B0%D0%BB%2C+%D1%87%D1%82%D0%BE+%D1%8D%D1%82%D0%BE+%D1%88%D1%83%D1%82%D0%BA%D0%B0%22;Artem+is+silent..............................)](https://git.io/typing-svg)
+
 ## License
-Faculty "syneprin"©
+Faculty Syneprin©
 2023
