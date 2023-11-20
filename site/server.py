@@ -33,6 +33,10 @@ def save():
 def error():
     return render_template('errorPage.html')
 
+@app.route('/win')
+def win():
+    return render_template('winPage.html')
+
 @app.route('/site/js/<filename>')
 def uploaded_js(filename):
     return send_from_directory('js', filename)

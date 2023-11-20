@@ -95,7 +95,7 @@ function move(){
     removeHighlighPositions()
 
     if (getLastReceivedData().includes('checkmate')){
-        window.location.href = ""
+        window.location.href = "/win?winner=" + getNowMove()
     }
 
     setLastReceivedData(null)

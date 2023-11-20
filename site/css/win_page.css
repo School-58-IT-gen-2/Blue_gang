@@ -1,0 +1,12 @@
+body {
+    background-color: white; /* Цвет фона */
+    font-family: "Rubik", sans-serif; /* Шрифт */
+}
+
+#winnerText {
+    position: absolute;
+    top: 35vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    font-size: 40pt;
+}
