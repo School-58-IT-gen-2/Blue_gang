@@ -257,7 +257,7 @@ class Knight(Figure):
         return array
 
 
-# Ферзь
+# Слон
 class Bishop(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Bishop")
