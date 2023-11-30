@@ -11,18 +11,21 @@ td {
 }
 
 td:hover {
-    background-color: #7C0902
+    background-color: #7c5502
 }
 
 .black {
-    background-color: #343434
+    background-color: rgb(118, 150, 86);
+    mix-blend-mode: multiply;
 }
 
 .white {
-    background-color: #E0AB76
+    background-color: rgb(238, 238, 210);
+    mix-blend-mode: multiply;
 }
 
 
 .attack_position {
-    background-color: rgba(0, 255, 0, 0.3);
+    background-color: #919191;
+    mix-blend-mode: multiply;
 }

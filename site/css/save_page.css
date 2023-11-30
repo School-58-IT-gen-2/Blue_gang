@@ -1,10 +1,10 @@
 body {
-    background-color: white; /* Цвет фона */
+    background-color: #343434; /* Цвет фона */
     font-family: "Rubik", sans-serif; /* Шрифт */
 }
 
 #title {
-    color: black; /* Цвет текста */
+    color: 	#D3D3D3; /* Цвет текста */
     font-size: 50pt; /* Размер шрифта */
     position: absolute;
     top: 20vh;
@@ -13,7 +13,7 @@ body {
 }
 
 #subTitle {
-    color: #343434; /* Цвет текста */
+    color: 	#D3D3D3; /* Цвет текста */
     font-size: 25pt; /* Размер шрифта */
     position: absolute;
     top: 35vh;
@@ -22,7 +22,7 @@ body {
 }
 
 #code {
-    color: black; /* Цвет текста */
+    color: 	#D3D3D3; /* Цвет текста */
     font-size: 13pt; /* Размер шрифта */
     position: absolute;
     top: 50vh;

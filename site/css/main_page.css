@@ -1,17 +1,21 @@
 body {
-  background-color: white; /* Цвет фона */
+  background-color: #343434; /* Цвет фона */
   font-family: "Rubik", sans-serif; /* Шрифт */
 }
 
 
 #startGameButton {
-    position: absolute;
-    top: 30vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 20%;
-    font-size: 20pt;
+  width: 100%; 
+  max-width: 410px; 
+  height: 67px; 
+  background-color: transparent; 
+  border: 2px solid rgb(104, 104, 104); 
+  border-radius: 100px; 
+  color: #e5e5e5;
+  padding: 10px 20px; 
+  cursor: pointer; 
+  font-size: 26pt; 
+  margin: 6px; 
 }
 
 #inputCode {
