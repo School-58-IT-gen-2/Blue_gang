@@ -1,24 +1,22 @@
 // Обработчик нажатий на клетку
-function clickHandler(id) {
+async function clickHandler(id) {
     // Чаще всего getLastReceivedData() это доступные для атаки клетки 
     let attackPositions = getLastReceivedData()
     if (attackPositions != null &&
-        attackPositions != 'white' && 
-        attackPositions != 'black'){
+        attackPositions != 'white' &&
+        attackPositions != 'black') {
         // Если это рил доступные клетки для атаки, сверяю, могу ли я сходить куда хочу
         if (attackPositions.some(
-                arr => arr[0] == Number(id[0]) && arr[1] == Number(id[2]))
-            ){  
-                // Если могу, отправляю на сервер запрос о ходе и выполняю move()
-                sendMessage('move|' + getSelectedPosition() + '|' + id)
-                .then(() => move())
-        }
-        else{
+            arr => arr[0] == Number(id[0]) && arr[1] == Number(id[2]))
+        ) {
+            // Если могу, отправляю на сервер запрос о ходе и выполняю move()
+            await sendMessage('move|' + getSelectedPosition() + '|' + id)
+            await move();
+        } else {
             // В противном случае просто выбираю клетку
             selectPosition(id)
         }
-    }
-    else{
+    } else {
         selectPosition(id)
     }
 
@@ -26,30 +24,26 @@ function clickHandler(id) {
 
 
 // Выбор клетки, из которой буду ходить
-function selectPosition(id){
-    sendMessage('get_color|' + id)
-    .then(() => checkColor(getLastReceivedData(), id))
+async function selectPosition(id) {
+    await sendMessage('get_color|' + id)
+    await checkColor(getLastReceivedData(), id)
 }
 
 // Проверяю, можно ли сейчас сходить определенным цветом
-function checkColor(color, id){
+async function checkColor(color, id) {
     // Делаем вид, что никакой актуальной информации нет
     setLastReceivedData(null)
-    if (color == getNowMove()){
+    if (color == getNowMove()) {
         setSelectedPosition(id)
-        sendMessage('get_attack_positions|' + id)
-        .then(() => highlighAttackPositions())
-        .catch((error) => console.error('Error:', error));
+        await sendMessage('get_attack_positions|' + id)
+        highlighAttackPositions()
     }
-    // Делаем вид, что никакой актуальной информации нет
-    setLastReceivedData(null)
-
 }
 
 // Подсвечиваю доступные для атаки клетки
-function highlighAttackPositions(){
+ function highlighAttackPositions() {
     console.log(getLastReceivedData())
-    if (getLastReceivedData() != null){
+    if (getLastReceivedData() != null) {
         // Убираю подсветку старых клеток
         removeHighlighPositions()
         setAttackPositions(getLastReceivedData())
@@ -64,16 +58,16 @@ function highlighAttackPositions(){
 }
 
 // Убрать подсветку всех клеток
-function removeHighlighPositions(){
-    for (let i = 1; i < 9; i++){
-        for (let j = 1; j < 9; j++){
+function removeHighlighPositions() {
+    for (let i = 1; i < 9; i++) {
+        for (let j = 1; j < 9; j++) {
             let cage = document.getElementById(String(i) + '_' + String(j))
             cage.classList.remove('attack_position')
         }
     }
 }
 
-function move(){
+function move() {
     // x1 y1 - откуда идет; x2 y2 - куда идет
     let x1 = getSelectedPosition()[0]
     let y1 = getSelectedPosition()[2]
@@ -101,7 +95,7 @@ function move(){
     let color = getLastReceivedData().split('|')[0].toLowerCase()
     let name = getLastReceivedData().split('|')[1].toLowerCase()
 
-    img.src = 'site/res/' + color + '_' + name +'.png'
+    img.src = 'site/res/' + color + '_' + name + '.png'
     img.classList.add('figure-image');
     newCage.appendChild(img)
 
@@ -109,7 +103,7 @@ function move(){
     removeHighlighPositions()
 
     // Если мат, то перекидывает на финальную страницу
-    if (getLastReceivedData().includes('checkmate')){
+    if (getLastReceivedData().includes('checkmate')) {
         window.location.href = "/win?winner=" + getNowMove()
     }
 
