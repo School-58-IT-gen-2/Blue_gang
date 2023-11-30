@@ -41,23 +41,21 @@
       const code = urlParams.get("code"); // Код игры (если есть, иначе null)
 
       // Подключение к серверу. Процесс зависит от того, это новая игра, или по коду
-      socket.on("connect", function () {
+      socket.on("connect", async function () {
         console.log("Connected to server");
         if (code != null) {
-          sendMessage("start|custom")
-            .then(() => sendMessage("set_figures|" + code))
-            .then(() => checkFigureError())
-            .then(() => generateChessboard())
-            .then(() => setFigures(decrypt(code)))
-            .then(() => (lastReceivedData = null))
-            .catch((error) => console.error("Error:", error));
+          await sendMessage("start|custom")
+          await sendMessage("set_figures|" + code)
+          checkFigureError()
+          generateChessboard()
+          setFigures(decrypt(code))
+          lastReceivedData = null
         } else {
-          sendMessage("start|default")
-            .then(() => sendMessage("get_new_figures"))
-            .then(() => generateChessboard())
-            .then(() => setFigures(decrypt(lastReceivedData)))
-            .then(() => (lastReceivedData = null))
-            .catch((error) => console.error("Error:", error));
+            await sendMessage("start|default")
+            await sendMessage("get_new_figures")
+            generateChessboard()
+            setFigures(decrypt(lastReceivedData))
+            lastReceivedData = null
         }
       });
 
@@ -67,7 +65,7 @@
       });
 
       // Отправляем сообщение на сервер
-      function sendMessage(message) {
+      async function sendMessage(message) {
         return new Promise((resolve, reject) => {
           socket.emit("message_from_client", message);
           setTimeout(() => {
