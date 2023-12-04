@@ -74,6 +74,8 @@ function move() {
     let x2 = getLastReceivedData().split('|')[2].split('_')[0]
     let y2 = getLastReceivedData().split('|')[2].split('_')[1]
 
+    addMove(x1, y1, x2, y2);
+
     // Убираю фигуру со стартовой клетки
     let oldCage = document.getElementById(x1 + '_' + y1)
     let images = oldCage.getElementsByTagName('img');

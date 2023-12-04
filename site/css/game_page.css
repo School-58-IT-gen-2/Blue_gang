@@ -1,15 +1,17 @@
-body {
-    background-color: #343434; /* Цвет фона */
-    font-family: "Rubik", sans-serif; /* Шрифт */
-}
-
-
 #nowMove {
     color: 	#D3D3D3;
     font-size: 52pt; 
     position: absolute;
     top: 90vh;
     left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+#left {
+    position: absolute;
+    width: 20em; 
+    top: 45vh;
+    left: 15vw;
     transform: translate(-50%, -50%);
 }
 
@@ -26,3 +28,15 @@ body {
     font-size: 26pt; 
     margin: 6px;
 }
+
+#moves {
+    width: 100%; 
+    max-width: 392px; 
+    height: 615px;
+    overflow-y: auto;
+    border-radius: 10px; 
+    border: 2px solid rgb(104, 104, 104); 
+    padding: 10px;
+    color: #e5e5e5;
+}
+

@@ -6,26 +6,26 @@
 }
 
 td {
-    width: 75px; 
-    height: 75px
+    width: 4em; 
+    height: 4em;
 }
 
 td:hover {
-    background-color: #7c5502
+    background-color: #C1666B;
 }
 
 .black {
-    background-color: rgb(118, 150, 86);
+    background-color: #6DAEDB;
     mix-blend-mode: multiply;
 }
 
 .white {
-    background-color: rgb(238, 238, 210);
+    background-color: #EFF6E0;
     mix-blend-mode: multiply;
 }
 
 
 .attack_position {
-    background-color: #919191;
+    background-color: #50723C;
     mix-blend-mode: multiply;
 }
