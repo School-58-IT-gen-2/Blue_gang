@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/site/css/board.css" />
     <link rel="stylesheet" type="text/css" href="/site/css/figures.css" />
     <link rel="stylesheet" type="text/css" href="/site/css/game_page.css" />
+    <link rel="stylesheet" type="text/css" href="/site/css/main.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&display=swap"
       rel="stylesheet"
@@ -23,8 +24,15 @@
     <a id="nowMove"> Сейчас ход белых</a>
     <!-- Показывает чей ход -->
 
-    <button id="save", class='button'>Сохранить</button>
-    <!-- Кнопка сохранения прогресса -->
+    <div id="left">
+      <button id="save", class='button'>Сохранить</button>
+      <!-- Кнопка сохранения прогресса -->
+
+      <div id="moves"></div>
+      <!-- Область, куда выводятся ходы -->
+    </div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="/site/js/generateBoard.js"></script>
@@ -37,6 +45,7 @@
       let attackPositions = null; // Доступные клетки дял атаки
       let selectedPosition = null; // Выбранная клетка
       let nowMove = "white"; // Чей сейчас ход
+      let numNowMoves = 0; // Количество сделанных ходов
       const urlParams = new URLSearchParams(window.location.search); // URL параметры
       const code = urlParams.get("code"); // Код игры (если есть, иначе null)
 
@@ -98,6 +107,29 @@
         return selectedPosition;
       }
 
+      function addOneNumberOfMoves(positions) {
+        numNowMoves += 1;
+      }
+
+      function getNumberOfMoves() {
+        return numNowMoves;
+      }
+
+      function transformToChessNotation(x1, y1, x2, y2){
+        let letters = {
+            1: 'a',
+            2: 'b',
+            3: 'c',
+            4: 'd',
+            5: 'e',
+            6: 'f',
+            7: 'g',
+            8: 'h'
+        }
+
+        return letters[x1] + String(y1) + "-" + letters[x2] + String(y2)
+      }
+
       // Передаем ход
       function changeNowMove() {
         if (nowMove == "white") {
@@ -117,6 +149,16 @@
         if (getLastReceivedData() == "ERROR") {
           window.location.href = "error";
         }
+      }
+
+      function addMove(x1, y1, x2, y2){
+        let moves = document.getElementById("moves")
+        let move = document.createElement("text")
+        addOneNumberOfMoves();
+        move.innerHTML = String(getNumberOfMoves()) + ". " + transformToChessNotation(
+          x1, y1, x2, y2) + "\n";
+        move.style.display = "block";
+        moves.appendChild(move)
       }
 
       // Сохранение прогресса

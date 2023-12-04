@@ -40,6 +40,10 @@ def error():
 def win():
     return render_template('winPage.html')
 
+@app.route('/tmp')
+def tmp():
+    return render_template('tmp.html')
+
 # Доступ к файлам из необходимой директории по url
 @app.route('/site/js/<filename>')
 def uploaded_js(filename):
