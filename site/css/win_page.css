@@ -1,6 +1,7 @@
 
 #winnerText {
     position: absolute;
+    color: 	#D3D3D3;
     top: 35vh;
     left: 50vw;
     transform: translate(-50%, -50%);

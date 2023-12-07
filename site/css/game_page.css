@@ -40,3 +40,22 @@
     color: #e5e5e5;
 }
 
+#ad {
+    width: 100%; 
+    max-width: 350px; 
+    height: 665px;
+    overflow-y: auto;
+    border-radius: 10px; 
+    border: 2px solid rgb(104, 104, 104); 
+    padding: 10px;
+    color: #e5e5e5;
+    margin-left: 75%;
+    margin-top: 6%;
+}
+
+text {
+    color: #D3D3D3;
+    font-size: 200%;
+    margin-top: 50%;
+    overflow: auto;
+}

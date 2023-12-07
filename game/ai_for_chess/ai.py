@@ -1,6 +1,5 @@
 import chess
 
-import chess
 
 class ChessAI:
     def __init__(self):
