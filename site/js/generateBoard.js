@@ -1,72 +1,43 @@
-const FIGURES_TO_NUMBERS = {
-  0: "pawn",
-  1: "rook",
-  2: "bishop",
-  3: "knight",
-  4: "queen",
-  5: "king",
-};
+import { NUMBER_TO_LETTER, decrypt } from "/site/js/chessNotation.js";
+import { clickHandler } from "/site/js/clickHandler.js";
 
-const COLORS = {
-  w: "white",
-  b: "black",
-};
-
-// Создаем доску, просто проходя циклами
-function generateChessboard() {
+function generateBoard() {
   const chessboard = document.getElementById("chessboard");
   const colors = ["white", "black"];
 
-  for (let row = 0; row < 8; row++) {
+  for (let row = 8; row > 0; row--) {
     const rowElement = document.createElement("tr");
-    for (let col = 0; col < 8; col++) {
+    for (let col = 1; col < 9; col++) {
       const cellElement = document.createElement("td");
-
       cellElement.className = colors[(row + col) % 2];
-      cellElement.id = String(row + 1) + "_" + String(col + 1);
-
-      // Обработчик нажатия на клетку
+      cellElement.id = NUMBER_TO_LETTER[col] + row;
       cellElement.addEventListener("click", function () {
-        clickHandler(String(row + 1) + "_" + String(col + 1));
+        clickHandler(cellElement.id);
       });
-
       rowElement.appendChild(cellElement);
     }
     chessboard.appendChild(rowElement);
   }
 }
 
-// Устанавливаем фигуры на доску
-function setFigures(figures) {
-  try {
-    figures.forEach((figure) => {
-      let cage = document.getElementById(
-        String(figure[2]) + "_" + String(figure[3])
-      );
-      let imgElement = document.createElement("img");
-      imgElement.src =
-        "site/res/" + figure[1] + "_" + figure[0].toLowerCase() + ".png";
-
-      imgElement.classList.add("figure-image");
-      // Привязываем фигуру к клетке
-      cage.appendChild(imgElement);
-    });
-  } catch (error) {
-    // В случае ошибки (чаще всего неверный код), переходим на специальную страницу
-    window.location.href = "error";
+function setFigures(code) {
+  if (code == null) {
+    code =
+      "0w210w220w230w240w250w260w270w281w111w183w123w172w132w164w155w140b710b720b730b740b750b760b770b781b811b883b823b872b832b864b855b84";
   }
+  const figures = decrypt(code);
+  console.log(figures);
+
+  figures.forEach((figure) => {
+    let cage = document.getElementById(NUMBER_TO_LETTER[figure[3]] + figure[2]);
+    let imgElement = document.createElement("img");
+    imgElement.src =
+      "site/res/" + figure[1] + "_" + figure[0].toLowerCase() + ".png";
+
+    imgElement.classList.add("figure-image");
+    // Привязываем фигуру к клетке
+    cage.appendChild(imgElement);
+  });
 }
 
-// Расшифровываем переданную расстановку фигур
-function decrypt(s) {
-  let decrypted = [];
-  for (let i = 0; i < s.length; i += 4) {
-    decrypted.push([
-      FIGURES_TO_NUMBERS[s[i]],
-      COLORS[s[i + 1]],
-      Number(s[i + 2]),
-      Number(s[i + 3]),
-    ]);
-  }
-  return decrypted;
-}
+export { generateBoard, setFigures };

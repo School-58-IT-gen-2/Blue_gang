@@ -25,154 +25,34 @@
     <!-- Показывает чей ход -->
 
     <div id="left">
-      <button id="save", class='button'>Сохранить</button>
+      <button id="save" , class="button">Сохранить</button>
       <!-- Кнопка сохранения прогресса -->
 
       <div id="moves"></div>
       <!-- Область, куда выводятся ходы -->
     </div>
-
-    <div id="right">
-      <div id="ad"><text> Сдесь могла быть ваша реклама </text></div>
-
-    </div>
-
-    
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
-    <script src="/site/js/generateBoard.js"></script>
-    <script src="/site/js/movement.js"></script>
-    <script>
-      var socket = io.connect(
-        "http://" + document.domain + ":" + location.port
-      );
-      let lastReceivedData = null; // Последняя информация, полученная с сервера
-      let attackPositions = null; // Доступные клетки дял атаки
-      let selectedPosition = null; // Выбранная клетка
-      let nowMove = "white"; // Чей сейчас ход
-      let numNowMoves = 0; // Количество сделанных ходов
-      const urlParams = new URLSearchParams(window.location.search); // URL параметры
-      const code = urlParams.get("code"); // Код игры (если есть, иначе null)
+    <script type="module" src="/site/js/generateBoard.js"></script>
+    <script type="module" src="/site/js/clickHandler.js"></script>
+    <script type="module" src="/site/js/connect.js"></script>
+    <script type="module">
+      import { generateBoard, setFigures } from "/site/js/generateBoard.js";
+      import { socket, sendMessage } from "/site/js/connect.js";
 
-      // Подключение к серверу. Процесс зависит от того, это новая игра, или по коду
+      const urlParams = new URLSearchParams(window.location.search); 
+      const code = urlParams.get("code"); 
+
       socket.on("connect", async function () {
-        console.log("Connected to server");
-        if (code != null) {
-          await sendMessage("start|custom")
-          await sendMessage("set_figures|" + code)
-          checkFigureError()
-          generateChessboard()
-          setFigures(decrypt(code))
-          lastReceivedData = null
-        } else {
-            await sendMessage("start|default")
-            await sendMessage("get_new_figures")
-            generateChessboard()
-            setFigures(decrypt(lastReceivedData))
-            lastReceivedData = null
-        }
+        generateBoard();
+        setFigures(code);
+        sendMessage("start", code);
       });
 
-      // Запоминаем последнее сообщение с сервера
-      socket.on("message_from_server", function (message) {
-        lastReceivedData = message;
-      });
-
-      // Отправляем сообщение на сервер
-      async function sendMessage(message) {
-        return new Promise((resolve, reject) => {
-          socket.emit("message_from_client", message);
-          setTimeout(() => {
-            resolve();
-          }, 100);
-        });
-      }
-
-      function getLastReceivedData() {
-        return lastReceivedData;
-      }
-
-      function setLastReceivedData(data) {
-        lastReceivedData = data;
-      }
-
-      function setAttackPositions(positions) {
-        attackPositions = positions;
-      }
-
-      function getAttackPositions() {
-        return attackPositions;
-      }
-
-      function setSelectedPosition(positions) {
-        selectedPosition = positions;
-      }
-
-      function getSelectedPosition() {
-        return selectedPosition;
-      }
-
-      function addOneNumberOfMoves(positions) {
-        numNowMoves += 1;
-      }
-
-      function getNumberOfMoves() {
-        return numNowMoves;
-      }
-
-      function transformToChessNotation(x1, y1, x2, y2){
-        let letters = {
-            1: 'a',
-            2: 'b',
-            3: 'c',
-            4: 'd',
-            5: 'e',
-            6: 'f',
-            7: 'g',
-            8: 'h'
-        }
-
-        return letters[x1] + String(y1) + "-" + letters[x2] + String(y2)
-      }
-
-      // Передаем ход
-      function changeNowMove() {
-        if (nowMove == "white") {
-          nowMove = "black";
-          document.getElementById("nowMove").textContent = "Сейчас ход черных";
-        } else {
-          nowMove = "white";
-          document.getElementById("nowMove").textContent = "Сейчас ход белых";
-        }
-      }
-
-      function getNowMove() {
-        return nowMove;
-      }
-
-      function checkFigureError() {
-        if (getLastReceivedData() == "ERROR") {
-          window.location.href = "error";
-        }
-      }
-
-      function addMove(x1, y1, x2, y2){
-        let moves = document.getElementById("moves")
-        let move = document.createElement("text")
-        addOneNumberOfMoves();
-        move.innerHTML = String(getNumberOfMoves()) + ". " + transformToChessNotation(
-          x1, y1, x2, y2) + "\n";
-        move.style.display = "block";
-        moves.appendChild(move)
-      }
-
-      // Сохранение прогресса
       document.getElementById("save").addEventListener("click", function () {
-        sendMessage("encode").then(
-          () => (window.location.href = "save?code=" + getLastReceivedData())
-        );
+        console.log("save");
+        sendMessage("save").then((message) => {
+          window.location.href = "save?code=" + message.message;
+        });
       });
     </script>
   </body>

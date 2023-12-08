@@ -19,10 +19,13 @@ class Figure:
             raise CoordinateException(x, y)
 
     def __str__(self):
-        return f"{self.name}: {self.x}, {self.y}"
+        return f"{self.name}, {self.color}: {self.x}, {self.y}"
 
     def __repr__(self):
-        return f"{self.name}: {self.x}, {self.y}"
+        return f"{self.name}, {self.color}: {self.x}, {self.y}"
+    
+    def get_name(self):
+        return self.name
 
     def move(self, x, y, user_friendly=True):
         if (x, y) in self.get_attack_positions():
@@ -129,12 +132,6 @@ class Pawn(Figure):
                 return array
             else:
                 try:
-                    if self.x == 2:
-                        if self.is_empty(self.x + 2, self.y):
-                            array.append((self.x + 2, self.y))
-                except CoordinateException:
-                    pass
-                try:
                     if self.is_empty(self.x + 1, self.y):
                         array.append((self.x + 1, self.y))
                 except CoordinateException:
@@ -158,12 +155,6 @@ class Pawn(Figure):
             if self.x == 0:
                 return array
             else:
-                try:
-                    if self.x == 7:
-                        if self.is_empty(self.x - 2, self.y):
-                            array.append((self.x - 2, self.y))
-                except CoordinateException:
-                    pass
                 try:
                     if self.is_empty(self.x - 1, self.y):
                         array.append((self.x - 1, self.y))
