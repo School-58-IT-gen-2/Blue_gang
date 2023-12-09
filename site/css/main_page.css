@@ -1,17 +1,15 @@
-
-
 #startGameButton {
-  width: 100%; 
-  max-width: 410px; 
-  height: 67px; 
-  background-color: transparent; 
-  border: 2px solid rgb(104, 104, 104); 
-  border-radius: 100px; 
+  width: 100%;
+  max-width: 410px;
+  height: 67px;
+  background-color: transparent;
+  border: 2px solid rgb(104, 104, 104);
+  border-radius: 100px;
   color: #e5e5e5;
-  padding: 10px 20px; 
-  cursor: pointer; 
-  font-size: 26pt; 
-  margin: 6px; 
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 26pt;
+  margin: 6px;
 }
 
 #inputCode {

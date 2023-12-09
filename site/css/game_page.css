@@ -1,61 +1,61 @@
 #nowMove {
-    color: 	#D3D3D3;
-    font-size: 52pt; 
-    position: absolute;
-    top: 90vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+  color: #d3d3d3;
+  font-size: 52pt;
+  position: absolute;
+  top: 90vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 #left {
-    position: absolute;
-    width: 20em; 
-    top: 45vh;
-    left: 15vw;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  width: 20em;
+  top: 45vh;
+  left: 15vw;
+  transform: translate(-50%, -50%);
 }
 
 #save {
-    width: 100%; 
-    max-width: 410px; 
-    height: 67px; 
-    background-color: transparent; 
-    border: 2px solid rgb(104, 104, 104); 
-    border-radius: 100px; 
-    color: #e5e5e5;
-    padding: 10px 20px; 
-    cursor: pointer; 
-    font-size: 26pt; 
-    margin: 6px;
+  width: 100%;
+  max-width: 410px;
+  height: 67px;
+  background-color: transparent;
+  border: 2px solid rgb(104, 104, 104);
+  border-radius: 100px;
+  color: #e5e5e5;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 26pt;
+  margin: 6px;
 }
 
 #moves {
-    width: 100%; 
-    max-width: 392px; 
-    height: 615px;
-    overflow-y: auto;
-    border-radius: 10px; 
-    border: 2px solid rgb(104, 104, 104); 
-    padding: 10px;
-    color: #e5e5e5;
+  width: 100%;
+  max-width: 392px;
+  height: 615px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 2px solid rgb(104, 104, 104);
+  padding: 10px;
+  color: #e5e5e5;
 }
 
 #ad {
-    width: 100%; 
-    max-width: 350px; 
-    height: 665px;
-    overflow-y: auto;
-    border-radius: 10px; 
-    border: 2px solid rgb(104, 104, 104); 
-    padding: 10px;
-    color: #e5e5e5;
-    margin-left: 75%;
-    margin-top: 6%;
+  width: 100%;
+  max-width: 350px;
+  height: 665px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 2px solid rgb(104, 104, 104);
+  padding: 10px;
+  color: #e5e5e5;
+  margin-left: 75%;
+  margin-top: 6%;
 }
 
 text {
-    color: #D3D3D3;
-    font-size: 200%;
-    margin-top: 50%;
-    overflow: auto;
+  color: #d3d3d3;
+  font-size: 200%;
+  margin-top: 50%;
+  overflow: auto;
 }

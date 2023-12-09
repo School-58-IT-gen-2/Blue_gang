@@ -1,28 +1,26 @@
-
-
 #title {
-    color: 	#D3D3D3; /* Цвет текста */
-    font-size: 50pt; /* Размер шрифта */
-    position: absolute;
-    top: 20vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+  color: #d3d3d3; /* Цвет текста */
+  font-size: 50pt; /* Размер шрифта */
+  position: absolute;
+  top: 20vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 #subTitle {
-    color: 	#D3D3D3; /* Цвет текста */
-    font-size: 25pt; /* Размер шрифта */
-    position: absolute;
-    top: 35vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+  color: #d3d3d3; /* Цвет текста */
+  font-size: 25pt; /* Размер шрифта */
+  position: absolute;
+  top: 35vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 #code {
-    color: 	#D3D3D3; /* Цвет текста */
-    font-size: 13pt; /* Размер шрифта */
-    position: absolute;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+  color: #d3d3d3; /* Цвет текста */
+  font-size: 13pt; /* Размер шрифта */
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }

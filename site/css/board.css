@@ -1,32 +1,31 @@
 #chessboard_div {
-    display: flex;
-    position: absolute;
-    top: 45vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+  display: flex;
+  position: absolute;
+  top: 45vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 td {
-    width: 4em; 
-    height: 4em;
+  width: 4em;
+  height: 4em;
 }
 
 td:hover {
-    background-color: #C1666B;
+  background-color: #c1666b;
 }
 
 .black {
-    background-color: #6DAEDB;
-    mix-blend-mode: multiply;
+  background-color: #6daedb;
+  mix-blend-mode: multiply;
 }
 
 .white {
-    background-color: #EFF6E0;
-    mix-blend-mode: multiply;
+  background-color: #eff6e0;
+  mix-blend-mode: multiply;
 }
 
-
 .attack_position {
-    background-color: #50723C;
-    mix-blend-mode: multiply;
+  background-color: #50723c;
+  mix-blend-mode: multiply;
 }
