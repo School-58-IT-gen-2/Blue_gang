@@ -11,9 +11,7 @@ async function clickHandler(id) {
           if (colorResult.message == moveColorResult.message) {
             selected = id;
             highlight(id);
-          } else {
-            console.log(moveColorResult, colorResult);
-          }
+          } 
         });
       })
       .catch((error) => {
@@ -29,9 +27,7 @@ async function clickHandler(id) {
             selected = id;
             removeHighlight();
             highlight(id);
-          } else {
-            console.log(moveColorResult, colorResult);
-          }
+          } 
         });
       });
     }
@@ -80,8 +76,7 @@ function move(first, second) {
     let img = document.createElement("img");
     let color = moveResult.message.split(",")[0].toLowerCase();
     let name = moveResult.message.split(",")[1].toLowerCase().replace(" ", "");
-    console.log(color, name);
-    console.log("site/res/" + color + "_" + name + ".png");
+
     img.src = "site/res/" + color + "_" + name + ".png";
     img.classList.add("figure-image");
 

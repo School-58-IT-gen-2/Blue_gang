@@ -26,8 +26,6 @@ function setFigures(code) {
       "0w210w220w230w240w250w260w270w281w111w183w123w172w132w164w155w140b710b720b730b740b750b760b770b781b811b883b823b872b832b864b855b84";
   }
   const figures = decrypt(code);
-  console.log(figures);
-
   figures.forEach((figure) => {
     let cage = document.getElementById(NUMBER_TO_LETTER[figure[3]] + figure[2]);
     let imgElement = document.createElement("img");

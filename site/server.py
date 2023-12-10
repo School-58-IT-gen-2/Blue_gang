@@ -74,10 +74,7 @@ def handle_message(message):
 
     match message["type"]:
         case "start":
-            print(message['message'])
-            board = Board(code=message['message'])
-            print(board)
-
+            board = Board(code=message["message"])
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
             try:
@@ -108,26 +105,25 @@ def handle_message(message):
             )
 
         case "move":
-            print("ДВИЖЕНИЕ")
             board.move(
                 *board.to_number_notation(message["message"][:2]),
                 *board.to_number_notation(message["message"][2:]),
             )
-            
+
             color = board.get_figure_by_position(
                 *board.to_number_notation(message["message"][2:])
             ).get_color()
-            
+
             name = board.get_figure_by_position(
                 *board.to_number_notation(message["message"][2:])
             ).get_name()
-            
+
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": f"{color}, {name}"},
             )
-            
-        case 'save':
+
+        case "save":
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": board.encode()},
@@ -135,4 +131,4 @@ def handle_message(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=5000)
+    socketio.run(app, host="0.0.0.0", port=5000)

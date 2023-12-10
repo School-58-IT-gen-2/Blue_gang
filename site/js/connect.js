@@ -2,7 +2,6 @@ const socket = io.connect("https://" + document.domain + ":" + location.port);
 let numOfMessages = 1;
 
 async function sendMessage(type, message) {
-
   return new Promise((resolve, reject) => {
     const messageId = numOfMessages++;
 
@@ -10,9 +9,7 @@ async function sendMessage(type, message) {
       if (response.id === messageId) {
         resolve(response);
         socket.off("message_from_server", handleServerMessage);
-        
       } else {
-        console.log(response);
         return null;
       }
     };
@@ -31,6 +28,5 @@ async function sendMessage(type, message) {
     }, 5000);
   });
 }
-
 
 export { socket, sendMessage };

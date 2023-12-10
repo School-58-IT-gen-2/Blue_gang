@@ -117,8 +117,7 @@ class Board:
         for figure in self.get_figures():
             if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure
-            else:
-                print(figure.get_coordinates())
+ 
 
     # Декодирует состояние доски
     def decode(self, code):
