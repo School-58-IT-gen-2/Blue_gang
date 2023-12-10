@@ -13,7 +13,6 @@ async function sendMessage(type, message) {
         
       } else {
         console.log(response);
-        // Возвращаем null, чтобы избежать неопределенного значения
         return null;
       }
     };
