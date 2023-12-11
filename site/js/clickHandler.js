@@ -2,7 +2,9 @@ import { sendMessage } from "/site/js/connect.js";
 import { NUMBER_TO_LETTER } from "/site/js/chessNotation.js";
 let selected = null;
 let highlighted = [];
-let moveColor = 'w';
+sendMessage("get_move_color").then((moveColorResult) => {
+  let moveColor = moveColorResult;
+})
 
 async function clickHandler(id) {
   if (selected == id){
@@ -86,6 +88,7 @@ function move(first, second) {
     img.classList.add("figure-image");
 
     document.getElementById(second).appendChild(img);
+
 
     if (moveColor == 'w'){
       moveColor = 'b';
