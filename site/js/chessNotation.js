@@ -48,8 +48,9 @@ function toNumberNotation(s) {
 }
 
 function decrypt(s) {
+  let color = s[0];
   let decrypted = [];
-  for (let i = 0; i < s.length; i += 4) {
+  for (let i = 1; i < s.length; i += 4) {
     decrypted.push([
       FIGURES_TO_NUMBERS[s[i]],
       COLORS[s[i + 1]],
