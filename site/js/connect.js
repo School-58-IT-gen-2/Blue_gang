@@ -1,4 +1,4 @@
-const socket = io.connect("https://" + document.domain + ":" + location.port, {secure: true});
+const socket = io.connect("https://chess.projectalpha.ru", {secure: true});
 let numOfMessages = 1;
 
 async function sendMessage(type, message) {
