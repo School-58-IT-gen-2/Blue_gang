@@ -37,11 +37,12 @@
     <script type="module" src="/site/js/connect.js"></script>
     <script type="module">
       import { generateBoard, setFigures } from "/site/js/generateBoard.js";
-      import { socket, sendMessage } from "/site/js/connect.js";
+      import { socket, sendMessage, setSocket } from "/site/js/connect.js";
 
       const urlParams = new URLSearchParams(window.location.search); 
       const code = urlParams.get("code"); 
 
+      setSocket();
       socket.on("connect", async function () {
         generateBoard();
         setFigures(code);

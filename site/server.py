@@ -2,9 +2,11 @@ from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 import sys
 import os
-import time
+from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from game.classes.board import Board
@@ -130,12 +132,17 @@ def handle_message(message):
             )
 
 
-if __name__ == "__main__":
-    from werkzeug.middleware.proxy_fix import ProxyFix
-    
-    ssl_context = ('/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem',
-                   '/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem')
-    
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-    socketio.run(app,  port=5000, use_reloader=True, ssl_context=ssl_context)
+if __name__ == "__main__":
+    PORT = 5000
+    ssl_context = (
+        "/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem",
+        "/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem",
+    )
+    if Path(ssl_context[0]).is_file() and Path(ssl_context[1]).is_file():
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+        socketio.run(app, port=PORT, use_reloader=True, ssl_context=ssl_context)
+    else:
+        print("Нет SSL сертификатов")
+        socketio.run(app, port=PORT)
+        
