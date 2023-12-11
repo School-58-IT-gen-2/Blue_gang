@@ -135,7 +135,7 @@ if __name__ == "__main__":
     from werkzeug.middleware.proxy_fix import ProxyFix
     
     ssl_context = ('/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem',
-                   '/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem;')
+                   '/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem')
     
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
