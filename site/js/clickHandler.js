@@ -4,7 +4,11 @@ let selected = null;
 let highlighted = [];
 
 async function clickHandler(id) {
-  if (selected == null) {
+  if (selected == id){
+    selected = null;
+    removeHighlight();
+  }
+  else if (selected == null) {
     sendMessage("get_color", id)
       .then((colorResult) => {
         sendMessage("get_move_color").then((moveColorResult) => {
