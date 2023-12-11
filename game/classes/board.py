@@ -25,6 +25,7 @@ class Board:
         if code == None:
             code = DEFAULT_CODE
         color, figures = self.decode(code)
+        print(color, figures)
 
         self.move_color = color
         self.white_figures = []
