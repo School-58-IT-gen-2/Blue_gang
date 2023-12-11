@@ -131,7 +131,6 @@ def handle_message(message):
 
 
 if __name__ == "__main__":
-    from werkzeug.serving import run_simple
     from werkzeug.middleware.proxy_fix import ProxyFix
     
     ssl_context = ('/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem',
