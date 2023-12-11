@@ -24,9 +24,9 @@ class Board:
     def __init__(self, code=DEFAULT_CODE):
         if code == None:
             code = DEFAULT_CODE
-        figures = self.decode(code)
+        color, figures = self.decode(code)
 
-        self.move_color = "white"
+        self.move_color = color
         self.white_figures = []
         self.black_figures = []
 
@@ -104,7 +104,10 @@ class Board:
     """
 
     def encode(self):
-        s = ""
+        if self.move_color == 'white':
+            s = 'w'
+        else:
+            s = 'b'
         for figure in self.get_figures():
             if figure.is_alive():
                 s += FIGURES_TO_NUMBERS[figure.name.lower()]
@@ -122,14 +125,19 @@ class Board:
     # Декодирует состояние доски
     def decode(self, code):
         m = []
-        for i in range(0, len(code), 4):
+        color = None
+        if code[0] == 'w':
+            color = 'white'
+        else:
+            color = 'black'
+        for i in range(1, len(code), 4):
             m.append(
                 eval(
                     f'{NUMBERS_TO_FIGURES[code[i]].capitalize()}({code[i + 2]}, {code[i + 3]}, "{code[i + 1]}" )'
                 )
             )
 
-        return m
+        return color, m
 
     def to_chess_notation(self, x, y):
         return NUMBERS_TO_LETTERS[y] + str(x)
