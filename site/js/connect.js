@@ -1,4 +1,4 @@
-const socket = io.connect("https://" + document.domain + ":" + location.port);
+const socket = io.connect("https://" + document.domain + ":" + location.port, {secure: true});
 let numOfMessages = 1;
 
 async function sendMessage(type, message) {
@@ -10,7 +10,7 @@ async function sendMessage(type, message) {
         resolve(response);
         socket.off("message_from_server", handleServerMessage);
       } else {
-        return null;
+        return null;ч
       }
     };
 
