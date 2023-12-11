@@ -131,4 +131,12 @@ def handle_message(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5000)
+    from werkzeug.serving import run_simple
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    
+    ssl_context = ('/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem',
+                   '/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem;')
+    
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+    socketio.run(app, host="0.0.0.0", port=5000, use_reloader=True, ssl_context=ssl_context)
