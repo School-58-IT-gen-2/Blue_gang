@@ -2,9 +2,6 @@ import { sendMessage } from "/site/js/connect.js";
 import { NUMBER_TO_LETTER } from "/site/js/chessNotation.js";
 let selected = null;
 let highlighted = [];
-sendMessage("get_move_color").then((moveColorResult) => {
-  let moveColor = moveColorResult;
-})
 
 async function clickHandler(id) {
   if (selected == id){
@@ -89,15 +86,15 @@ function move(first, second) {
 
     document.getElementById(second).appendChild(img);
 
+    sendMessage("get_move_color").then((moveColorResult) => {
+      if (moveColorResult == 'white'){
+        document.getElementById("nowMove").innerHTML = "Сейчас ход белых"
+      }
+      else if (moveColorResult == 'black'){
+        document.getElementById("nowMove").innerHTML = "Сейчас ход черных"
+      }
+    })
 
-    if (moveColor == 'w'){
-      moveColor = 'b';
-      document.getElementById("nowMove").innerHTML = "Сейчас ход черных"
-    }
-    else if (moveColor == 'b'){
-      moveColor = 'w';
-      document.getElementById("nowMove").innerHTML = "Сейчас ход белых"
-    }
 
     selected = null;
   });
