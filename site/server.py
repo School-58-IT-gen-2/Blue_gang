@@ -138,4 +138,4 @@ if __name__ == "__main__":
     
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-    socketio.run(app, host="0.0.0.0", port=5000, use_reloader=True, ssl_context=ssl_context)
+    socketio.run(app,  port=5000, use_reloader=True, ssl_context=ssl_context)

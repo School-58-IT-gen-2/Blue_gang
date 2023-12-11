@@ -132,6 +132,12 @@ class Pawn(Figure):
                 return array
             else:
                 try:
+                    if self.x == 2:
+                        if self.is_empty(self.x + 2, self.y):
+                            array.append((self.x + 2, self.y))
+                except CoordinateException:
+                    pass
+                try:
                     if self.is_empty(self.x + 1, self.y):
                         array.append((self.x + 1, self.y))
                 except CoordinateException:
@@ -155,6 +161,12 @@ class Pawn(Figure):
             if self.x == 0:
                 return array
             else:
+                try:
+                    if self.x == 7:
+                        if self.is_empty(self.x - 2, self.y):
+                            array.append((self.x - 2, self.y))
+                except CoordinateException:
+                    pass
                 try:
                     if self.is_empty(self.x - 1, self.y):
                         array.append((self.x - 1, self.y))
