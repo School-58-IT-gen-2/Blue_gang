@@ -62,13 +62,13 @@ td:hover {
 
 @media screen and (orientation: landscape) {
   td {
-      width: 4em;
-      height: 4em;
+      width: 4.5em;
+      height: 4.5em;
   }
 
   #chessboard_div img {
-      width: 3.5em;
-      height: 3.5em;
+      width: 3.8em;
+      height: 3.8em;
   }
 
 }
