@@ -31,7 +31,7 @@ async function sendMessage(type, message) {
     });
 
     const timeoutId = setTimeout(() => {
-      reject(new Error("Timeout: No response from the server."));
+      reject(new Error("Timeout: No response from the server. Type: " + type + ". Message: " + message));
       socket.off("message_from_server", handleServerMessage);
     }, 5000);
   });
