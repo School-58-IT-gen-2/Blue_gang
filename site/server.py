@@ -91,7 +91,10 @@ def handle_message(message):
 
     match message["type"]:
         case "start":
+            start_time = time.perf_counter()
             session["board"] = Board(id=message["message"])
+            end_time = time.perf_counter()
+            print(f"Доска создана за {end_time - start_time} секунд")
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
             try:
