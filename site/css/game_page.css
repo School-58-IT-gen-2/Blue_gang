@@ -57,3 +57,28 @@ text {
   margin-top: 50%;
   overflow: auto;
 }
+
+@media screen and (orientation: portrait) and (max-width: 500px) {
+  #nowMove {
+    font-size: 16pt;
+    position: absolute;
+    top: 65vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+  
+
+  #moves {
+    display: none;
+  }
+
+  #save {
+    position: absolute;
+    top: 13vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Ширина кнопки */
+    height: 55px; /* Высота кнопки */
+    font-size: 22pt; /* Размер шрифта */
+  }
+}

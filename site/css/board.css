@@ -37,6 +37,14 @@ td:hover {
 
 
 @media screen and (orientation: portrait) and (max-width: 500px) {
+  #chessboard_div {
+    display: flex;
+    position: absolute;
+    top: 40vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+  
   td {
       width: 2em;
       height: 2em;
@@ -46,16 +54,6 @@ td:hover {
       width: 2em;
       height: 2em;
   }
-
-  #nowMove {
-      display: none;
-  }
-
-  #moves {
-      display: none;
-  }
-
-
 }
 
 @media screen and (orientation: landscape) {
