@@ -1,9 +1,8 @@
-let data = "https://youtu.be/dQw4w9WgXcQ?si=T6PYXu7j8ImWt3SV";
-// if (window.location.protocol === "https:") {
-//   data = "https://chess.projectalpha.ru/game?id=" + id;
-// } else {
-//   data = "localhost:5000/game?id=" + id;
-// }
+if (window.location.protocol === "https:") {
+  data = "https://chess.projectalpha.ru/game?id=" + id;
+} else {
+  data = "localhost:5000/game?id=" + id;
+}
 
 let options = {
   text: data,
