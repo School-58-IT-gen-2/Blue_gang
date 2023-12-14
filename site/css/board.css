@@ -7,13 +7,18 @@
 }
 
 td {
-  width: 4em;
+  width: 4em; 
   height: 4em;
 }
 
 td:hover {
-  background-color: #c1666b;
+  background-color: #C1666B;
 }
+
+#chessboard_div img {
+  width: 100px;
+}
+
 
 .black {
   background-color: #6daedb;
@@ -28,4 +33,42 @@ td:hover {
 .attack_position {
   background-color: #50723c;
   mix-blend-mode: multiply;
+}
+
+
+@media screen and (orientation: portrait) and (max-width: 500px) {
+  td {
+      width: 2em;
+      height: 2em;
+  }
+
+  #chessboard_div img {
+      width: 2em;
+      height: 2em;
+  }
+
+  #nowMove {
+      display: none;
+  }
+
+  #moves {
+      display: none;
+  }
+
+  #save {
+      display: none;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  td {
+      width: 4em;
+      height: 4em;
+  }
+
+  #chessboard_div img {
+      width: 3.5em;
+      height: 3.5em;
+  }
+
 }
