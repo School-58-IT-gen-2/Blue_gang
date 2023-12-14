@@ -146,7 +146,7 @@ class Board:
                 "column": self.to_chess_notation(*figure.get_coordinates())[0],
                 "row": self.to_chess_notation(*figure.get_coordinates())[1],
             }
-            for figure in self.get_figures()
+            for figure in self.get_figures() if figure.is_alive()
         ]
 
         with open(f"saves/{id}.json", "w") as f:
