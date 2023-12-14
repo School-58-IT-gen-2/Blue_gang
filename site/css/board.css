@@ -55,9 +55,7 @@ td:hover {
       display: none;
   }
 
-  #save {
-      display: none;
-  }
+
 }
 
 @media screen and (orientation: landscape) {
