@@ -66,5 +66,5 @@ export {
   NUMBER_TO_LETTER,
   toChessNotation,
   toNumberNotation,
-  decrypt
+  decrypt,
 };

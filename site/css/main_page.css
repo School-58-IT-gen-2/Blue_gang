@@ -3,16 +3,21 @@
   top: 40vh;
   left: 50vw;
   transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 20pt;
-  background-color: transparent;
-  border: 2px solid rgb(104, 104, 104);
-  border-radius: 100px;
-  color: #e5e5e5;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 26pt;
-  display: block;
+  width: 450px; /* Ширина кнопки */
+  height: 80px; /* Высота кнопки */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+  border-radius: 100px; /* Закругленные углы */
+  color: #e5e5e5; /* Белый цвет текста */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  font-size: 26pt; /* Размер шрифта */
+  font-family: "Rubik"; /* Шрифт */
+}
+
+#startGameButton:hover {
+  background-color: white; /* Белый фон при наведении */
+  color: black; /* Черный цвет текста при наведении */
 }
 
 #inputCode {
@@ -21,20 +26,15 @@
   left: 50vw;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 20%;
-  font-size: 20pt;
-}
-
-#inputCode {
-  width: 410px; 
-  height: 60px; 
-  background-color: transparent; 
-  border: 2px solid rgb(104, 104, 104); 
-  border-radius: 100px; 
-  color: #e5e5e5; 
-  padding: 10px 20px; 
-  cursor: pointer; 
-  font-size: 24pt; 
-  font-family: "Rubik"; 
-  margin-bottom: 10px; 
+  width: 410px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid rgb(104, 104, 104);
+  border-radius: 100px;
+  color: #e5e5e5;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 24pt;
+  font-family: "Rubik";
+  margin-top: 1vh;
 }

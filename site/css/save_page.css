@@ -2,25 +2,70 @@
   color: #d3d3d3; /* Цвет текста */
   font-size: 50pt; /* Размер шрифта */
   position: absolute;
-  top: 20vh;
+  top: 8vh;
   left: 50vw;
   transform: translate(-50%, -50%);
 }
 
-#subTitle {
-  color: #d3d3d3; /* Цвет текста */
-  font-size: 25pt; /* Размер шрифта */
+#textDiv {
   position: absolute;
-  top: 35vh;
-  left: 50vw;
+  top: 45vh;
+  left: 20vw;
   transform: translate(-50%, -50%);
 }
 
-#code {
+#id {
+  margin-bottom: 30px;
+  text-align: center;
   color: #d3d3d3; /* Цвет текста */
-  font-size: 13pt; /* Размер шрифта */
+  font-size: 50pt; /* Размер шрифта */
+}
+
+#copy {
+  margin-top: 0;
+  width: 450px; /* Ширина кнопки */
+  height: 80px; /* Высота кнопки */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+  border-radius: 100px; /* Закругленные углы */
+  color: #e5e5e5; /* Белый цвет текста */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  font-size: 26pt; /* Размер шрифта */
+  font-family: "Rubik"; /* Шрифт */
+}
+
+#copy:hover {
+  background-color: white; /* Белый фон при наведении */
+  color: black; /* Черный цвет текста при наведении */
+}
+
+#qrDiv {
   position: absolute;
   top: 50vh;
+  left: 70vw;
+  transform: translate(-50%, -50%);
+}
+
+
+#toMainPageButton {
+  position: absolute;
+  top: 90vh;
   left: 50vw;
   transform: translate(-50%, -50%);
+  width: 450px; /* Ширина кнопки */
+  height: 80px; /* Высота кнопки */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+  border-radius: 100px; /* Закругленные углы */
+  color: #e5e5e5; /* Белый цвет текста */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  font-size: 26pt; /* Размер шрифта */
+  font-family: "Rubik"; /* Шрифт */
+}
+
+#toMainPageButton:hover {
+  background-color: white; /* Белый фон при наведении */
+  color: black; /* Черный цвет текста при наведении */
 }

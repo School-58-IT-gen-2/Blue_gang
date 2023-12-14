@@ -1,22 +1,31 @@
 import { sendMessage } from "/site/js/connect.js";
-import { NUMBER_TO_LETTER } from "/site/js/chessNotation.js";
+import { NUMBER_TO_LETTER, toChessNotation } from "/site/js/chessNotation.js";
 let selected = null;
 let highlighted = [];
-let moveColor = 'w';
+let moveColor = "white";
+let numOfMoves = 0;
+
+function setMoveColor(color) {
+  moveColor = color;
+  if (color == "white") {
+    document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
+  } else if (color == "black") {
+    document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+  }
+}
 
 async function clickHandler(id) {
-  if (selected == id){
+  if (selected == id) {
     selected = null;
     removeHighlight();
-  }
-  else if (selected == null) {
+  } else if (selected == null) {
     sendMessage("get_color", id)
       .then((colorResult) => {
         sendMessage("get_move_color").then((moveColorResult) => {
           if (colorResult.message == moveColorResult.message) {
             selected = id;
             highlight(id);
-          } 
+          }
         });
       })
       .catch((error) => {
@@ -32,7 +41,7 @@ async function clickHandler(id) {
             selected = id;
             removeHighlight();
             highlight(id);
-          } 
+          }
         });
       });
     }
@@ -87,19 +96,24 @@ function move(first, second) {
 
     document.getElementById(second).appendChild(img);
 
+    if (moveColor == "white") {
+      setMoveColor("black");
+    } else if (moveColor == "black") {
+      setMoveColor("white");
+    }
 
-    
-    if (moveColor == 'w'){
-      moveColor = 'b';
-      document.getElementById("nowMove").innerHTML = "Сейчас ход черных"
-    }
-    else if (moveColor == 'b'){
-      moveColor = 'w';
-      document.getElementById("nowMove").innerHTML = "Сейчас ход белых"
-    }
+    addMove(first + "-" + second);
 
     selected = null;
   });
 }
 
-export { clickHandler };
+function addMove(s) {
+  let moves = document.getElementById("moves");
+  let oneMove = document.createElement("text");
+  numOfMoves++;
+  oneMove.innerHTML = String(numOfMoves) + ". " + s + "<br>";
+  moves.appendChild(oneMove);
+}
+
+export { clickHandler, setMoveColor, addMove };

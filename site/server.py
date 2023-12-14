@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, jsonify, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -6,19 +6,20 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 import sys
 import os
+import time
+import colorama
 from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from game.classes.board import Board
 from game.classes.exception import CodeException
 
+colorama.init()
 
 app = Flask(__name__)
 CORS(app)
 
 socketio = SocketIO(app)
-
-board = None
 
 
 # Доступ к mainPage.html через url /. Остальные страницы ниже аналогично
@@ -68,15 +69,29 @@ def uploaded_res(filename):
     return send_from_directory("res", filename)
 
 
+@app.route("/get_save/<id>", methods=["GET"])
+def upload_json_data(id):
+    if id == 'default':
+        data = open('default.json', 'r').read()
+    else:
+        try:
+            data = open(f'saves/{id}.json', 'r').read()
+        except:
+            
+            raise CodeException()
+    
+    return jsonify(data)
+
 # Общение с клиентом
 @socketio.on("message_from_client")
 def handle_message(message):
-    global board
     print("Message from client:", message)
+
+    board = session.get("board")
 
     match message["type"]:
         case "start":
-            board = Board(code=message["message"])
+            session["board"] = Board(id=message["message"])
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
             try:
@@ -132,7 +147,6 @@ def handle_message(message):
             )
 
 
-
 if __name__ == "__main__":
     PORT = 5000
     ssl_context = (
@@ -143,6 +157,6 @@ if __name__ == "__main__":
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
         socketio.run(app, port=PORT, use_reloader=True, ssl_context=ssl_context)
     else:
-        print("Нет SSL сертификатов")
+        print(colorama.Fore.YELLOW + "Нет SSL сертификатов")
+        time.sleep(1)
         socketio.run(app, port=PORT)
-        

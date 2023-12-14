@@ -1,11 +1,11 @@
 let socket = null;
 let numOfMessages = 1;
 
-function setSocket(){
+function setSocket() {
   if (window.location.protocol === "https:") {
     socket = io.connect("https://chess.projectalpha.ru", { secure: true });
   } else {
-      socket = io.connect("localhost:5000");
+    socket = io.connect("localhost:5000");
   }
 }
 

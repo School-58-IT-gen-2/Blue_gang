@@ -1,0 +1,198 @@
+{
+  "move_color": "white",
+  "figures": [
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "a",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "b",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "c",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "d",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "e",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "f",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "g",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Pawn",
+      "column": "h",
+      "row": "2"
+    },
+    {
+      "color": "white",
+      "name": "Rook",
+      "column": "a",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Rook",
+      "column": "h",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Knight",
+      "column": "b",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Knight",
+      "column": "g",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Bishop",
+      "column": "c",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Bishop",
+      "column": "f",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "Queen",
+      "column": "e",
+      "row": "1"
+    },
+    {
+      "color": "white",
+      "name": "King",
+      "column": "d",
+      "row": "1"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "a",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "b",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "c",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "d",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "e",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "f",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "g",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Pawn",
+      "column": "h",
+      "row": "7"
+    },
+    {
+      "color": "black",
+      "name": "Rook",
+      "column": "a",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Rook",
+      "column": "h",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Knight",
+      "column": "b",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Knight",
+      "column": "g",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Bishop",
+      "column": "c",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Bishop",
+      "column": "f",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "Queen",
+      "column": "e",
+      "row": "8"
+    },
+    {
+      "color": "black",
+      "name": "King",
+      "column": "d",
+      "row": "8"
+    }
+  ],
+  "moves": []
+}
