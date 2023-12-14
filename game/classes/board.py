@@ -82,7 +82,7 @@ class Board:
             if figure.get_coordinates() == (x1, y1) and figure.is_alive():
                 self.move_color = COLORS[1 - COLORS.index(self.move_color)]
                 self.moves.append(
-                    self.to_chess_notation(x1, y1) + self.to_chess_notation(x2, y2)
+                    self.to_chess_notation(x1, y1) + '-' + self.to_chess_notation(x2, y2)
                 )
                 return figure.move(x2, y2, user_friendly=user_friendly)
         else:
