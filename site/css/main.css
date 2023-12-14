@@ -17,8 +17,17 @@ body {
 }
 
 #backButton img {
-  width: 100px;
+  width: 100px;/* размеры кнопки /*
   position: fixed; /* Фиксированная позиция */
   top: 2.5%; /* Располагаем кнопку вверху */
   left: 1.5%; /* Располагаем кнопку влево */
+}
+
+@media screen and (orientation: portrait) {
+  #backButton img {
+    width: 25px; /* размеры кнопки */
+    position: fixed; /* Фиксированная позиция */
+    top: 2.5%; /* Располагаем кнопку вверху */
+    left: 1.5%; /* Располагаем кнопку влево */
+  }
 }
