@@ -7,31 +7,29 @@
   transform: translate(-50%, -50%);
 }
 
-#left {
-  position: absolute;
-  width: 20em;
-  top: 45vh;
-  left: 83vw;
-  transform: translate(-50%, -50%);
-}
-
 #save {
-  width: 100%;
-  max-width: 410px;
-  height: 67px;
-  background-color: transparent;
-  border: 2px solid rgb(104, 104, 104);
-  border-radius: 100px;
-  color: #e5e5e5;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 26pt;
-  margin: 6px;
+  position: absolute;
+  top: 10vh;
+  left: 85vw;
+  transform: translate(-50%, -50%);
+  width: 450px; /* Ширина кнопки */
+  height: 80px; /* Высота кнопки */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+  border-radius: 100px; /* Закругленные углы */
+  color: #e5e5e5; /* Белый цвет текста */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  font-size: 26pt; /* Размер шрифта */
+  font-family: "Rubik"; /* Шрифт */
 }
 
 #moves {
-  width: 100%;
-  max-width: 392px;
+  position: absolute;
+  top: 50vh;
+  left: 85vw;
+  transform: translate(-50%, -50%);
+  width: 392px;
   height: 615px;
   overflow-y: auto;
   border-radius: 10px;
