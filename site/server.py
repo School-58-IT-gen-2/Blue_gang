@@ -11,6 +11,7 @@ import colorama
 from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from game.classes.figure import *
 from game.classes.board import Board
 from game.classes.exception import CodeException
 
@@ -71,16 +72,16 @@ def uploaded_res(filename):
 
 @app.route("/get_save/<id>", methods=["GET"])
 def upload_json_data(id):
-    if id == 'default':
-        data = open('default.json', 'r').read()
+    if id == "default":
+        data = open("default.json", "r").read()
     else:
         try:
-            data = open(f'saves/{id}.json', 'r').read()
+            data = open(f"saves/{id}.json", "r").read()
         except:
-            
             raise CodeException()
-    
+
     return jsonify(data)
+
 
 # Общение с клиентом
 @socketio.on("message_from_client")
@@ -96,6 +97,7 @@ def handle_message(message):
             end_time = time.perf_counter()
             print(f"Доска создана за {end_time - start_time} секунд")
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
+
         case "get_color":
             try:
                 color = board.get_figure_by_position(
@@ -125,23 +127,31 @@ def handle_message(message):
             )
 
         case "move":
-            board.move(
+            move_result = board.move(
                 *board.to_number_notation(message["message"][:2]),
                 *board.to_number_notation(message["message"][2:]),
             )
+            print(move_result)
+            if 'Мат' in move_result:
+                print('МАТ')
+                socketio.emit(
+                    "message_from_server",
+                    {"id": message["id"], "message": f"mate"},
+                )
+            else:
 
-            color = board.get_figure_by_position(
-                *board.to_number_notation(message["message"][2:])
-            ).get_color()
+                color = board.get_figure_by_position(
+                    *board.to_number_notation(message["message"][2:])
+                ).get_color()
 
-            name = board.get_figure_by_position(
-                *board.to_number_notation(message["message"][2:])
-            ).get_name()
+                name = board.get_figure_by_position(
+                    *board.to_number_notation(message["message"][2:])
+                ).get_name()
 
-            socketio.emit(
-                "message_from_server",
-                {"id": message["id"], "message": f"{color}, {name}"},
-            )
+                socketio.emit(
+                    "message_from_server",
+                    {"id": message["id"], "message": f"{color},{name}"},
+                )
 
         case "save":
             socketio.emit(

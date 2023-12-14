@@ -88,23 +88,32 @@ function move(first, second) {
     }
 
     let img = document.createElement("img");
-    let color = moveResult.message.split(",")[0].toLowerCase();
-    let name = moveResult.message.split(",")[1].toLowerCase().replace(" ", "");
+    console.log(moveResult)
+    if (moveResult.message == "mate") {
+      window.location.href = "/win";
+    } else {
+      let color = moveResult.message.split(",")[0].toLowerCase();
+      let name = moveResult.message
+        .split(",")[1]
+        .toLowerCase()
+        .replace(" ", "");
 
-    img.src = "site/res/" + color + "_" + name + ".png";
-    img.classList.add("figure-image");
+      img.src = "site/res/" + color + "_" + name + ".png";
+      console.log("site/res/" + color + "_" + name + ".png");
+      img.classList.add("figure-image");
 
-    document.getElementById(second).appendChild(img);
+      document.getElementById(second).appendChild(img);
 
-    if (moveColor == "white") {
-      setMoveColor("black");
-    } else if (moveColor == "black") {
-      setMoveColor("white");
+      if (moveColor == "white") {
+        setMoveColor("black");
+      } else if (moveColor == "black") {
+        setMoveColor("white");
+      }
+
+      addMove(first + "-" + second);
+
+      selected = null;
     }
-
-    addMove(first + "-" + second);
-
-    selected = null;
   });
 }
 

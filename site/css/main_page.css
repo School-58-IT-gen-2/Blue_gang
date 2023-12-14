@@ -38,3 +38,22 @@
   font-family: "Rubik";
   margin-top: 1vh;
 }
+
+@media screen and (orientation: portrait) and (max-width: 500px) {
+  #startGameButton {
+    position: absolute;
+    top: 40vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 450px; /* Ширина кнопки */
+    height: 80px; /* Высота кнопки */
+    background-color: transparent; /* Прозрачный фон */
+    border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+    border-radius: 100px; /* Закругленные углы */
+    color: #e5e5e5; /* Белый цвет текста */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    font-size: 26pt; /* Размер шрифта */
+    font-family: "Rubik"; /* Шрифт */
+  }
+}

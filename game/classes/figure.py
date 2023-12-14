@@ -27,7 +27,7 @@ class Figure:
     def get_name(self):
         return self.name
 
-    def move(self, x, y, user_friendly=True):
+    def move(self, x, y, user_friendly=False):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
                 if isinstance(self.get_figure(x, y), King):
