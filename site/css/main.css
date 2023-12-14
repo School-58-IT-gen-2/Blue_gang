@@ -25,7 +25,7 @@ body {
 
 @media screen and (orientation: portrait) {
   #backButton img {
-    width: 25px; /* размеры кнопки */
+    width: 50px; /* размеры кнопки */
     position: fixed; /* Фиксированная позиция */
     top: 2.5%; /* Располагаем кнопку вверху */
     left: 1.5%; /* Располагаем кнопку влево */
