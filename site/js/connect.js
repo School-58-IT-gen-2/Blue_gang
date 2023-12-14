@@ -3,7 +3,11 @@ let numOfMessages = 1;
 
 function setSocket() {
   if (window.location.protocol === "https:") {
-    socket = io.connect("https://chess.projectalpha.ru", { secure: true });
+    socket = io.connect("https://chess.projectalpha.ru", {
+      secure: true,
+      forceNew: true,
+      transports: ["polling"],
+    });
   } else {
     socket = io.connect("localhost:5000");
   }
@@ -31,7 +35,14 @@ async function sendMessage(type, message) {
     });
 
     const timeoutId = setTimeout(() => {
-      reject(new Error("Timeout: No response from the server. Type: " + type + ". Message: " + message));
+      reject(
+        new Error(
+          "Timeout: No response from the server. Type: " +
+            type +
+            ". Message: " +
+            message
+        )
+      );
       socket.off("message_from_server", handleServerMessage);
     }, 5000);
   });
