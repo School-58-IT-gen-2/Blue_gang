@@ -27,22 +27,12 @@ class Figure:
     def get_name(self):
         return self.name
 
-    def move(self, x, y, user_friendly=False):
+    def move(self, x, y):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
-                if isinstance(self.get_figure(x, y), King):
-                    self.get_figure(x, y).kill()
-                    if user_friendly:
-                        return f"{self.color} {self.name}. Мат {x}, {y}"
-                    else:
-                        return f"{self.color}|{self.name}|{x}_{y}|checkmate"
                 self.get_figure(x, y).kill()
             self.x, self.y = x, y
-
-            if user_friendly:
-                return f"{self.color} {self.name}. Новая позиция - {x}, {y}"
-            else:
-                return f"{self.color}|{self.name}|{x}_{y}"
+            return f"{self.color}|{self.name}|{x}_{y}"
 
         else:
             raise CoordinateException(x, y)

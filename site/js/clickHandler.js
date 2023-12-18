@@ -92,9 +92,10 @@ function move(first, second) {
     if (moveResult.message == "mate") {
       window.location.href = "/win";
     } else {
-      let color = moveResult.message.split(",")[0].toLowerCase();
+      let type = moveResult.message.split(",")[0]
+      let color = moveResult.message.split(",")[1].toLowerCase();
       let name = moveResult.message
-        .split(",")[1]
+        .split(",")[2]
         .toLowerCase()
         .replace(" ", "");
 
@@ -113,6 +114,10 @@ function move(first, second) {
       addMove(first + "-" + second);
 
       selected = null;
+
+      if (type == "mate"){
+        window.location.href = "/win";
+      }
     }
   });
 }

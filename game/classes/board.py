@@ -77,14 +77,14 @@ class Board:
         return self.figures
 
     # Ход фигуры из x1 y1 в x2 y2
-    def move(self, x1, y1, x2, y2, user_friendly=True):
+    def move(self, x1, y1, x2, y2):
         for figure in self.get_figures():
             if figure.get_coordinates() == (x1, y1) and figure.is_alive():
                 self.move_color = COLORS[1 - COLORS.index(self.move_color)]
                 self.moves.append(
                     self.to_chess_notation(x1, y1) + '-' + self.to_chess_notation(x2, y2)
                 )
-                return figure.move(x2, y2, user_friendly=user_friendly)
+                return figure.move(x2, y2)
         else:
             raise FigureNotFoundException(x1, y1)
 
@@ -181,5 +181,23 @@ class Board:
         return self.move_color
 
     def is_check_mate(self):
-        pass
-        # TODO проверка на мат
+        color = self.get_move_color()
+        
+        for figure in self.figures:
+            if figure.get_color() == color:
+                if isinstance(figure, King):
+                    king_moves = figure.get_attack_positions()
+                    king_moves.append(figure.get_coordinates())
+        
+        opponent_moves = []
+        for figure in self.figures:
+            if figure.get_color() != color:
+                opponent_moves.extend(figure.get_attack_positions())
+                
+        mate = True 
+        for king_move in king_moves:
+            if king_move not in opponent_moves:
+                mate = False 
+        
+        return mate 
+                    

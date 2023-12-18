@@ -127,30 +127,28 @@ def handle_message(message):
             )
 
         case "move":
-            move_result = board.move(
+            board.move(
                 *board.to_number_notation(message["message"][:2]),
                 *board.to_number_notation(message["message"][2:]),
             )
-            print(move_result)
-            if 'Мат' in move_result:
-                print('МАТ')
+
+            color = board.get_figure_by_position(
+                *board.to_number_notation(message["message"][2:])
+            ).get_color()
+
+            name = board.get_figure_by_position(
+                *board.to_number_notation(message["message"][2:])
+            ).get_name()
+
+            if board.is_check_mate():
                 socketio.emit(
                     "message_from_server",
-                    {"id": message["id"], "message": f"mate"},
+                    {"id": message["id"], "message": f"mate,{color},{name}"},
                 )
             else:
-
-                color = board.get_figure_by_position(
-                    *board.to_number_notation(message["message"][2:])
-                ).get_color()
-
-                name = board.get_figure_by_position(
-                    *board.to_number_notation(message["message"][2:])
-                ).get_name()
-
                 socketio.emit(
                     "message_from_server",
-                    {"id": message["id"], "message": f"{color},{name}"},
+                    {"id": message["id"], "message": f"ok,{color},{name}"},
                 )
 
         case "save":
