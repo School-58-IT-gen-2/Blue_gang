@@ -11,6 +11,7 @@ pip install Flask
 pip install flask_socketio
 pip install flask_cors
 pip install pybaseconv
+pip install python-telegram-bot
 ```
 
 ## Rules of the game
