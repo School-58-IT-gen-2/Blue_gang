@@ -9,7 +9,7 @@ function generateBoard() {
     const rowElement = document.createElement("tr");
     for (let col = 1; col < 9; col++) {
       const cellElement = document.createElement("td");
-      cellElement.className = colors[(row + col) % 2];
+      cellElement.className = colors[(row + col + 1) % 2];
       cellElement.id = NUMBER_TO_LETTER[col] + row;
       cellElement.addEventListener("click", function () {
         clickHandler(cellElement.id);
