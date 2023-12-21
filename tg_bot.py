@@ -33,7 +33,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await update.message.reply_text(
 
-        "Please press the button below to choose a color via the WebApp.",
+        "Please press the button to start",
 
         reply_markup=ReplyKeyboardMarkup.from_button(
 
