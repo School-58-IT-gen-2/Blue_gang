@@ -4,6 +4,8 @@ import time
 import json
 from pybaseconv import Converter, BASE
 
+import ai 
+
 
 board = chess.Board()
 
@@ -38,6 +40,7 @@ def save_board_fen(name_file):
     board_data = json.load(file)
 
   board = chess.Board()
+  board.clear()
 
   for figure in board_data['figures']:
     piece_symbol = figure["name"][0].lower()
@@ -51,8 +54,8 @@ def save_board_fen(name_file):
     board.turn = chess.WHITE
   else:
     board.turn = chess.BLACK
-
-  return board.fen()
+  
+  return [board.fen(), board_data['moves'], board_data['fen']]
 
 
 
@@ -110,42 +113,74 @@ def save_board_json(fen, moves):
 
   move_color = "white" if board.turn == chess.WHITE else "black"
 
+  
   board_data = {
       "move_color": move_color,
       "figures": figures,
       "moves": moves,
+      "fen": fen
   }
 
   name_file = create_name_file()
-  
+
   file_name = f'{name_file}.json'
 
+  
   with open(file_name, 'w') as file:
     json.dump(board_data, file, indent=2)
-
+  
   return name_file
 
+def promote_pawn_and_get_piece(board):
+  for move in board.legal_moves:
+    if board.piece_at(move.to_square) == chess.Piece(chess.PAWN, board.turn) and (move.to_square // 8 in (0, 7)):
+      print("Пешка достигла конца доски! Выберите фигуру (Q, R, N, B): ")
+      promotion_piece = input().upper()
+      if promotion_piece in ['Q', 'R', 'N', 'B']:
+        return move, promotion_piece
+      else:
+        print("Неверный выбор фигуры. Пожалуйста, выберите снова (Q, R, N, B).")
+        return None, None
+  return None, None
 
-
-
-
-save_moves = []
 
 save = input('введите код игры: ')
 
 if save == '':
   board = chess.Board()
+  save_moves = []
 else:
-  board = chess.Board(save_board_fen(save))
-  
+  boardb = save_board_fen(save)
+  save_moves = boardb[1]
+  board = chess.Board(boardb[2])
+  # ai.ChessAI().download_game(save_board_fen(save))
+
 print(board)
 
+
 while True:
-  move = input(':')
-  if move == 'exit':
-    print(f'код сохранения: {save_board_json(board.fen(), save_moves)}')
-    break
+  if board.turn:
+    move = input(':')
+    if move == 'exit':
+      print(f'код сохранения: {save_board_json(board.fen(), save_moves)}')
+      break
+    else:
+      movep = move
+      movep, chosen_piece = promote_pawn_and_get_piece(board)
+      if movep is not None and chosen_piece is not None:
+        board = move_on_board(move, board)
+        save_moves.append(str(move))
+        board.set_piece_at(movep.to_square, chess.Piece.from_symbol(chosen_piece))
+      else:
+        print(move)
+        board = move_on_board(move, board)
+      print(board)
+      save_moves.append(str(move))
+      print(save_moves)
   else:
-    board = move_on_board(move, board)
+    print('ai_move')
+    ai_move = ai.ChessAI().move(save_moves[-1])
+    print(ai_move)
+    board = move_on_board(str(ai_move), board)
     print(board)
-    save_moves.append(move)
+    save_moves.append(str(ai_move))
