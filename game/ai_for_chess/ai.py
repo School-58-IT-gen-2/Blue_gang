@@ -95,5 +95,8 @@ class ChessAI:
     def is_game_over(self):
         return not self.board.has_legal_moves()
 
+    def download_game(self, fen):
+        self.board.set_fen(fen)
+
 
 # print((ChessAI().move('e2e4'))) пример вызова 
