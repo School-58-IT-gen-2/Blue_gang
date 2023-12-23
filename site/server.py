@@ -114,18 +114,18 @@ def handle_message(message):
             attack_positions = legal_moves_figure(message['message'], board)
             for i, position in enumerate(attack_positions):
                 attack_positions[i] = position[2:]
-            print('позиции', attack_positions)
+            attack_positions = list(filter(lambda x: x != "", attack_positions))
+            print(attack_positions)
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": attack_positions},
             )
 
         case "move":
-            move_on_board(message['message'], board)
-            print(message['message'][:2])
             piece = board.piece_at(eval(f'chess.{message['message'][:2].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
             name = sym(piece.symbol().upper())
+            move_on_board(message['message'], board)
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": f"ok,{color},{name}"},
