@@ -123,7 +123,7 @@ def handle_message(message):
             )
 
         case "move":
-            piece = board.piece_at(eval(f'chess.{message['message'][:2].upper()}'))
+            piece = board.piece_at(eval(f'chess.{message["message"][:2].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
             name = sym(piece.symbol().upper())
             board = move_on_board(message['message'], board)
