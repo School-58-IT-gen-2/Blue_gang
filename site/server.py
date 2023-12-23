@@ -125,11 +125,28 @@ def handle_message(message):
             piece = board.piece_at(eval(f'chess.{message['message'][:2].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
             name = sym(piece.symbol().upper())
-            move_on_board(message['message'], board)
+            board = move_on_board(message['message'], board)
+            
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": f"ok,{color},{name}"},
             )
+            
+        case "ai_move":
+            ai_move = ai.ChessAI().move(board.moves[-1])
+            
+            piece = board.piece_at(eval(f'chess.{str(ai_move)[:2].upper()}'))
+            color = "white" if piece.color == chess.WHITE else "black"
+            name = sym(piece.symbol().upper())
+            
+            board = move_on_board(str(ai_move), board)
+            
+            socketio.emit(
+                "message_from_server",
+                {"id": message["id"], "message": f"ok,{color},{name},{ai_move}"},
+            )
+
+                
 
         case "save":
             socketio.emit(

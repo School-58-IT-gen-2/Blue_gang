@@ -106,6 +106,8 @@ function move(first, second) {
 
       document.getElementById(second).appendChild(img);
 
+      console.log(moveResult)
+
       if (moveColor == "white") {
         setMoveColor("black");
       } else if (moveColor == "black") {
@@ -119,8 +121,38 @@ function move(first, second) {
       if (type == "mate"){
         window.location.href = "/win";
       }
+      else {
+        ai_move();
+      }
     }
   });
+}
+
+function ai_move(){
+  sendMessage("ai_move").then((moveResult) => {
+    let img = document.createElement("img");
+    let type = moveResult.message.split(",")[0]
+    let color = moveResult.message.split(",")[1].toLowerCase();
+    let name = moveResult.message
+      .split(",")[2]
+      .toLowerCase()
+      .replace(" ", "");
+    let move = moveResult.message.split(",")[3].toLowerCase();
+    console.log(move)
+
+
+    img.src = "site/res/" + color + "_" + name + ".png";
+    console.log("site/res/" + color + "_" + name + ".png");
+    img.classList.add("figure-image");
+
+    document
+      .getElementById(move[0] + move[1])
+      .removeChild(
+        document.getElementById(move[0] + move[1]).getElementsByTagName("img")[0]
+      );
+
+    document.getElementById(move[2] + move[3]).appendChild(img);
+  })
 }
 
 function addMove(s) {

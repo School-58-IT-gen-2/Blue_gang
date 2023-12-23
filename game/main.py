@@ -40,7 +40,7 @@ def legal_moves_figure(position, board, moves=[]):
 
 def move_on_board(move, board):
     board.push_san(move)
-
+    board.add_move(move)
     return board
 
 
@@ -170,6 +170,20 @@ def promote_pawn_and_get_piece(board):
     return None, None
 
 
+def castling(move, board):
+  moved_piece = board.piece_at(board.peek().to_square)
+  if moved_piece.symbol() == 'K':
+    if move == 'e1g1':
+      return 'h1f1'
+    if move == 'e1c1':
+      return 'a1d1'
+    if move == 'e8g8':
+      return 'h8f8'
+    if move == 'e8c8':
+      return 'a8d8' 
+  
+
+
 if __name__ == "__main__":
     board = Board()
     save = input("введите код игры: ")
@@ -208,4 +222,5 @@ if __name__ == "__main__":
             print(ai_move)
             board = move_on_board(str(ai_move), board)
             print(board)
-            board.add_move(move)
+            board.add_move(str(ai_move))
+
