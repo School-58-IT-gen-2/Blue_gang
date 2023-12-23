@@ -52,6 +52,7 @@ function highlight(id) {
   sendMessage("get_attack_positions", id).then((attackPositions) => {
     highlighted = attackPositions.message;
     attackPositions.message.forEach((position) => {
+      console.log(position)
       document.getElementById(position).classList.add("attack_position");
     });
   });
