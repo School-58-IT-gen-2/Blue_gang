@@ -120,7 +120,9 @@ def create_name_file():
     return id
 
 
-def save_board_json(fen, moves=[]):
+def save_board_json(board):
+    fen = board.fen()
+    moves = board.moves
     print(moves)
     board = Board(fen)
     figures = []
@@ -184,7 +186,7 @@ def castling(move, board):
   
 
 
-save = input('введите код игры: ')
+'''save = input('введите код игры: ')
 
 if save == '':
   board = Board()
@@ -219,8 +221,9 @@ while True:
       print(save_moves)
   else:
     print('ai_move')
-    ai_move = ai.ChessAI(board.fen()).move(board.moves[-1])    
+    ai_move = ai.ChessAI(board.fen()).get_move()
     print(ai_move)
     board = move_on_board(str(ai_move), board)
     print(board)
     save_moves.append(str(ai_move))
+'''

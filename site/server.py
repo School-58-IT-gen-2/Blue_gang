@@ -93,6 +93,7 @@ def handle_message(message):
             else:
                 boardb = save_board_fen(message["message"])
                 board = Board(boardb[2])
+                print(board)
             end_time = time.perf_counter()
             print(f"Доска создана за {end_time - start_time} секунд")
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
@@ -133,7 +134,7 @@ def handle_message(message):
             )
             
         case "ai_move":
-            ai_move = ai.ChessAI().move(board.moves[-1])
+            ai_move = ai.ChessAI(board.fen()).get_move()
             
             piece = board.piece_at(eval(f'chess.{str(ai_move)[:2].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
@@ -151,7 +152,7 @@ def handle_message(message):
         case "save":
             socketio.emit(
                 "message_from_server",
-                {"id": message["id"], "message": board.encode()},
+                {"id": message["id"], "message": save_board_json(board)},
             )
 
 

@@ -90,9 +90,10 @@ class ChessAI():
                 min_evaluation = min(min_evaluation, evaluation)
             return min_evaluation
 
-    def move(self, player_move):
-        self.board.push_san(player_move)
+
+    def get_move(self):
         return self.get_best_move(self.board, 2, False)  # примерное значение глубины поиска
+
 
     def is_game_over(self):
         return not self.board.has_legal_moves()
