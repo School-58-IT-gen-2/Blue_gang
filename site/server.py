@@ -114,7 +114,7 @@ def handle_message(message):
             attack_positions = legal_moves_figure(message['message'], board)
             for i, position in enumerate(attack_positions):
                 attack_positions[i] = position[2:]
-            print(attack_positions)
+            print('позиции', attack_positions)
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": attack_positions},
@@ -122,25 +122,14 @@ def handle_message(message):
 
         case "move":
             move_on_board(message['message'], board)
-
-            color = board.get_figure_by_position(
-                *board.to_number_notation(message["message"][2:])
-            ).get_color()
-
-            name = board.get_figure_by_position(
-                *board.to_number_notation(message["message"][2:])
-            ).get_name()
-
-            if board.is_check_mate():
-                socketio.emit(
-                    "message_from_server",
-                    {"id": message["id"], "message": f"mate,{color},{name}"},
-                )
-            else:
-                socketio.emit(
-                    "message_from_server",
-                    {"id": message["id"], "message": f"ok,{color},{name}"},
-                )
+            print(message['message'][:2])
+            piece = board.piece_at(eval(f'chess.{message['message'][:2].upper()}'))
+            color = "white" if piece.color == chess.WHITE else "black"
+            name = sym(piece.symbol().upper())
+            socketio.emit(
+                "message_from_server",
+                {"id": message["id"], "message": f"ok,{color},{name}"},
+            )
 
         case "save":
             socketio.emit(
