@@ -1,7 +1,7 @@
 import chess
 
 
-class ChessAI:
+class ChessAI():
     def __init__(self):
         self.board = chess.Board()
 
@@ -63,7 +63,7 @@ class ChessAI:
             if evaluation_diff < best_evaluation_diff:
                 best_evaluation_diff = evaluation_diff
                 best_move = move
-                
+
         board.push(best_move)
         return best_move
 
@@ -91,12 +91,13 @@ class ChessAI:
     def move(self, player_move):
         self.board.push_san(player_move)
         return self.get_best_move(self.board, 2, False)  # примерное значение глубины поиска
-    
+
     def is_game_over(self):
         return not self.board.has_legal_moves()
 
     def download_game(self, fen):
-        self.board.set_fen(fen)
+      self.board.set_fen(fen)
+      print(self.board)
 
 
-# print((ChessAI().move('e2e4'))) пример вызова 
+# print((ChessAI().move('e2e4'))) #пример вызова 

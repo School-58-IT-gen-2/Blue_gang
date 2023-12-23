@@ -184,43 +184,43 @@ def castling(move, board):
   
 
 
-if __name__ == "__main__":
-    board = Board()
-    save = input("введите код игры: ")
-    if save == "":
-        board = Board()
+save = input('введите код игры: ')
+
+if save == '':
+  board = Board()
+  save_moves = []
+else:
+  boardb = save_board_fen(save)
+  save_moves = boardb[1]
+  board = Board(boardb[2])
+  ai.ChessAI().download_game(boardb[2])
+
+print(board)
+
+
+while True:
+  if board.turn:
+    move = input(':')
+    if move == 'exit':
+      print(f'код сохранения: {save_board_json(board.fen(), save_moves)}')
+      break
     else:
-        boardb = save_board_fen(save)
-        board = Board(boardb[2])
-        # ai.ChessAI().download_game(save_board_fen(save))
-
+      movep = move
+      movep, chosen_piece = promote_pawn_and_get_piece(board)
+      if movep is not None and chosen_piece is not None:
+        board = move_on_board(move, board)
+        board.add_move(str(move))
+        board.set_piece_at(movep.to_square, chess.Piece.from_symbol(chosen_piece))
+      else:
+        print(move)
+        board = move_on_board(move, board)
+      print(board)
+      board.add_move(str(move))
+      print(save_moves)
+  else:
+    print('ai_move')
+    ai_move = ai.ChessAI().move(board.moves[-1])
+    print(ai_move)
+    board = move_on_board(str(ai_move), board)
     print(board)
-
-    while True:
-        if board.turn:
-            move = input(":")
-            if move == "exit":
-                print(f"код сохранения: {save_board_json(board.fen(), board.moves)}")
-                break
-            else:
-                movep = move
-                movep, chosen_piece = promote_pawn_and_get_piece(board)
-                if movep is not None and chosen_piece is not None:
-                    board = move_on_board(move, board)
-                    board.add_move(move)
-                    board.set_piece_at(
-                        movep.to_square, chess.Piece.from_symbol(chosen_piece)
-                    )
-                else:
-                    print(move)
-                    board = move_on_board(move, board)
-                print(board)
-                board.add_move(move)
-        else:
-            print("ai_move")
-            ai_move = ai.ChessAI().move(board.moves[-1])
-            print(ai_move)
-            board = move_on_board(str(ai_move), board)
-            print(board)
-            board.add_move(str(ai_move))
-
+    save_moves.append(str(ai_move))
