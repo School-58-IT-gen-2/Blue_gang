@@ -99,7 +99,7 @@ def handle_message(message):
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
 
         case "get_color":
-            piece = board.piece_at(eval(f'chess.{message['message'].upper()}'))
+            piece = board.piece_at(eval(f'chess.{message["message"].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
             socketio.emit(
                 "message_from_server", {"id": message["id"], "message": color}
