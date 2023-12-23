@@ -2,8 +2,10 @@ import chess
 
 
 class ChessAI():
-    def __init__(self):
+    def __init__(self, fen=None):
         self.board = chess.Board()
+        if fen:
+            self.download_game(fen)
 
     def evaluate_board(self, board):
         piece_value = {
@@ -98,6 +100,7 @@ class ChessAI():
     def download_game(self, fen):
       self.board.set_fen(fen)
       print(self.board)
+      return self
 
 
 # print((ChessAI().move('e2e4'))) #пример вызова 

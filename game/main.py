@@ -219,7 +219,7 @@ while True:
       print(save_moves)
   else:
     print('ai_move')
-    ai_move = ai.ChessAI().move(board.moves[-1])
+    ai_move = ai.ChessAI(board.fen()).move(board.moves[-1])    
     print(ai_move)
     board = move_on_board(str(ai_move), board)
     print(board)
