@@ -1,3 +1,5 @@
+let data;
+
 if (window.location.protocol === "https:") {
   data = "https://chess.projectalpha.ru/game?id=" + id;
 } else {
