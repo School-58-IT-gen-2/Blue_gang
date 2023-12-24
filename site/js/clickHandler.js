@@ -10,7 +10,7 @@ function setMoveColor(color) {
   if (color == "white") {
     document.getElementById("nowMove").innerHTML = "Сейчас Ваш ход";
   } else if (color == "black") {
-    document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+    document.getElementById("nowMove").innerHTML = "";
   }
 }
 
@@ -184,6 +184,22 @@ function ai_move() {
       );
 
     document.getElementById(move[2] + move[3]).appendChild(img);
+
+    if (moveColor == "white") {
+      setMoveColor("black");
+    } else if (moveColor == "black") {
+      setMoveColor("white");
+    }
+
+    if (type == "mate") {
+      sendMessage("get_move_color").then((moveColorResult) => {
+        if (moveColorResult.message == 'black'){
+          window.location.href = "win?winner=white";
+        }else{
+          window.location.href = "win?winner=black";
+        }
+      })
+    }
 
     console.log(type);
     if (type == "castling") {
