@@ -39,7 +39,7 @@
   margin-top: 1vh;
 }
 
-@media screen and (orientation: portrait) and (max-width: 500px) {
+@media screen and (orientation: portrait) and (max-width: 600px) {
   #startGameButton {
     position: absolute;
     top: 40vh;
