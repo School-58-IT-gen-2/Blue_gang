@@ -58,7 +58,7 @@ text {
   overflow: auto;
 }
 
-@media screen and (orientation: portrait) and (max-width: 500px) {
+@media screen and (orientation: portrait) and (max-width: 600px) {
   #nowMove {
     font-size: 16pt;
     position: absolute;
