@@ -58,11 +58,11 @@ text {
   overflow: auto;
 }
 
-@media screen and (orientation: portrait) and (max-width: 600px) {
+@media screen and (orientation: portrait) and (max-height: 1050px) {
   #nowMove {
     font-size: 16pt;
     position: absolute;
-    top: 65vh;
+    top: 76vh;
     left: 50vw;
     transform: translate(-50%, -50%);
   }
@@ -73,11 +73,59 @@ text {
 
   #save {
     position: absolute;
-    top: 13vh;
+    top: 12vh;
     left: 50vw;
     transform: translate(-50%, -50%);
     width: 300px; /* Ширина кнопки */
     height: 55px; /* Высота кнопки */
     font-size: 22pt; /* Размер шрифта */
+  }
+}
+
+@media screen and (orientation: portrait) and (max-height: 850px) {
+  #nowMove {
+    font-size: 15pt;
+    position: absolute;
+    top: 80vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+
+  #moves {
+    display: none;
+  }
+
+  #save {
+    position: absolute;
+    top: 18vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 280px; /* Ширина кнопки */
+    height: 52px; /* Высота кнопки */
+    font-size: 20pt; /* Размер шрифта */
+  }
+}
+
+@media screen and (orientation: portrait) and (max-height: 700px) {
+  #nowMove {
+    font-size: 15pt;
+    position: absolute;
+    top: 85vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+
+  #moves {
+    display: none;
+  }
+
+  #save {
+    position: absolute;
+    top: 16vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 280px; /* Ширина кнопки */
+    height: 52px; /* Высота кнопки */
+    font-size: 20pt; /* Размер шрифта */
   }
 }

@@ -7,18 +7,17 @@
 }
 
 td {
-  width: 4em; 
+  width: 4em;
   height: 4em;
 }
 
 td:hover {
-  background-color: #C1666B;
+  background-color: #c1666b;
 }
 
 #chessboard_div img {
   width: 100px;
 }
-
 
 .black {
   background-color: #6daedb;
@@ -35,36 +34,74 @@ td:hover {
   mix-blend-mode: multiply;
 }
 
-
-@media screen and (orientation: portrait) and (max-width: 600px) {
+@media screen and (orientation: portrait) and (max-height: 1050px) {
   #chessboard_div {
     display: flex;
     position: absolute;
-    top: 40vh;
-    left: 50vw;
+    top: 45vh;
+    left: 49vw;
     transform: translate(-50%, -50%);
   }
-  
+
   td {
-      width: 2.4em;
-      height: 2.4em;
+    width: 2.2em;
+    height: 2.2em;
   }
 
   #chessboard_div img {
-      width: 2em;
-      height: 2em;
+    width: 1.9em;
+    height: 1.9em;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-height: 850px) {
+  #chessboard_div {
+    display: flex;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+
+  td {
+    width: 1.8em;
+    height: 1.8em;
+  }
+
+  #chessboard_div img {
+    width: 1.5em;
+    height: 1.5em;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-height: 700px) {
+  #chessboard_div {
+    display: flex;
+    position: absolute;
+    top: 52vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+
+  td {
+    width: 1.8em;
+    height: 1.8em;
+  }
+
+  #chessboard_div img {
+    width: 1.5em;
+    height: 1.5em;
   }
 }
 
 @media screen and (orientation: landscape) {
   td {
-      width: 4.5em;
-      height: 4.5em;
+    width: 4.5em;
+    height: 4.5em;
   }
 
   #chessboard_div img {
-      width: 3.8em;
-      height: 3.8em;
+    width: 3.8em;
+    height: 3.8em;
   }
-
 }
