@@ -118,6 +118,21 @@ function move(first, second) {
 
       selected = null;
 
+      if (type == "castling") {
+        img = document.createElement("img");
+        let move_val = moveResult.message.split(",")[3];
+        color = moveResult.message.split(",")[4];
+        console.log(move_val[0] + move_val[1])
+        document
+          .getElementById(move_val[0] + move_val[1])
+          .removeChild(
+            document.getElementById(move_val[0] + move_val[1]).getElementsByTagName("img")[0]
+          );
+        img.src = "site/res/" + color + "_rook.png";
+        img.classList.add("figure-image");
+        document.getElementById(move_val[2] + move_val[3]).appendChild(img);
+      }
+
       if (type == "mate") {
         window.location.href = "/win";
       } else {
@@ -163,6 +178,23 @@ function ai_move() {
       );
 
     document.getElementById(move[2] + move[3]).appendChild(img);
+
+    console.log(type);
+    if (type == "castling") {
+      img = document.createElement("img");
+      move = moveResult.split(",")[4];
+      color = moveResult
+        .split(",")[5]
+        .getElementById(move[0] + move[1])
+        .removeChild(
+          document
+            .getElementById(move[0] + move[1])
+            .getElementsByTagName("img")[0]
+        );
+      img.src = "site/res/" + color + "_rook.png";
+      img.classList.add("figure-image");
+      document.getElementById(move[2] + move[3]).appendChild(img);
+    }
   });
 }
 

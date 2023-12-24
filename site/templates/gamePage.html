@@ -50,9 +50,6 @@
         generateBoard();
         loadData(id);
         sendMessage("start", id);
-        sendMessage('get_color', 'a1').then((message) => {
-          console.log(message)
-        })
       });
 
       document.getElementById("save").addEventListener("click", function () {

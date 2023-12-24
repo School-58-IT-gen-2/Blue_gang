@@ -88,13 +88,16 @@ def handle_message(message):
     match message["type"]:
         case "start":
             start_time = time.perf_counter()
-            if message['message'] == None:
+            if message["message"] == None:
                 session["board"] = Board()
             else:
                 boardb = save_board_fen(message["message"])
-                board = Board(boardb[2])
+                board = Board(boardb[0])
                 print(board)
+                print(boardb[0])
+                session["board"] = board
             end_time = time.perf_counter()
+            print(session["board"])
             print(f"Доска создана за {end_time - start_time} секунд")
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
 
@@ -108,11 +111,15 @@ def handle_message(message):
         case "get_move_color":
             socketio.emit(
                 "message_from_server",
-                {"id": message["id"], "message": "white" if board.turn == chess.WHITE else "black"},
+                {
+                    "id": message["id"],
+                    "message": "white" if board.turn == chess.WHITE else "black",
+                },
             )
 
         case "get_attack_positions":
-            attack_positions = legal_moves_figure(message['message'], board)
+            print(board)
+            attack_positions = legal_moves_figure(message["message"], board)
             for i, position in enumerate(attack_positions):
                 attack_positions[i] = position[2:]
             attack_positions = list(filter(lambda x: x != "", attack_positions))
@@ -126,28 +133,43 @@ def handle_message(message):
             piece = board.piece_at(eval(f'chess.{message["message"][:2].upper()}'))
             color = "white" if piece.color == chess.WHITE else "black"
             name = sym(piece.symbol().upper())
-            board = move_on_board(message['message'], board)
+            board = move_on_board(message["message"], board)
             
-            socketio.emit(
-                "message_from_server",
-                {"id": message["id"], "message": f"ok,{color},{name}"},
-            )
-            
+            if board.is_game_over():
+                print('МАТ')
+                socketio.emit(
+                    "message_from_server",
+                    {"id": message["id"], "message": f"mate,{color},{name}"},
+                )
+            if not castling(message["message"], board):
+                socketio.emit(
+                    "message_from_server",
+                    {"id": message["id"], "message": f"ok,{color},{name}"},
+                )
+            else:
+                print('castling')
+                socketio.emit(
+                    "message_from_server",
+                    {
+                        "id": message["id"],
+                        "message": f"castling,{color},{name},"
+                        + ",".join(castling(message["message"], board)),
+                    },
+                )
+
         case "ai_move":
             ai_move = ai.ChessAI(board.fen()).get_move()
-            
-            piece = board.piece_at(eval(f'chess.{str(ai_move)[:2].upper()}'))
+
+            piece = board.piece_at(eval(f"chess.{str(ai_move)[:2].upper()}"))
             color = "white" if piece.color == chess.WHITE else "black"
             name = sym(piece.symbol().upper())
-            
+
             board = move_on_board(str(ai_move), board)
-            
+
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": f"ok,{color},{name},{ai_move}"},
             )
-
-                
 
         case "save":
             socketio.emit(

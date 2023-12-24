@@ -28,6 +28,9 @@ class Board(chess.Board):
 
     def add_move(self, move):
         self.moves.append(move)
+        
+    def is_game_over(self):
+        return not list(self.legal_moves)
 
 def legal_moves_figure(position, board, moves=[]):
     possible_moves = list(board.legal_moves)
@@ -56,10 +59,14 @@ def save_board_fen(name_file):
     board.clear()
 
     for figure in board_data["figures"]:
-        piece_symbol = figure["name"][0].lower()
+        if figure["name"].lower() == 'knight':
+            
+            piece_symbol = 'n'
+        else:
+            piece_symbol = figure["name"][0].lower()
         piece_color = chess.WHITE if figure["color"] == "white" else chess.BLACK
         piece_type = chess.PIECE_SYMBOLS.index(piece_symbol)
-        square = chess.parse_square(translate_position(figure["column"], figure["row"]))
+        square = chess.parse_square(figure["column"] + figure["row"])
         piece = chess.Piece(piece_type, piece_color)  # создание фигуры
         board.set_piece_at(square, piece)  # сохранение на доске
 
@@ -130,6 +137,7 @@ def save_board_json(board):
     for square in chess.SQUARES:
         piece = board.piece_at(square)
         if piece is not None:
+            print(piece.symbol().upper())
             figure_info = {
                 "color": "white" if piece.color == chess.WHITE else "black",
                 "name": sym(piece.symbol().upper()),
@@ -176,13 +184,13 @@ def castling(move, board):
   moved_piece = board.piece_at(board.peek().to_square)
   if moved_piece.symbol() == 'K':
     if move == 'e1g1':
-      return 'h1f1'
+      return ['h1f1', 'white']
     if move == 'e1c1':
-      return 'a1d1'
+      return ['a1d1', 'white']
     if move == 'e8g8':
-      return 'h8f8'
+      return ['h8f8', 'black']
     if move == 'e8c8':
-      return 'a8d8' 
+      return ['a8d8' , 'black']
   
 
 
