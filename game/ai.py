@@ -15,7 +15,7 @@ class ChessAI:
             chess.ROOK: 500,
             chess.QUEEN: 1000,
             chess.KING: 20000,
-        }  # Значения для каждой фигуры
+        }
 
         evaluation = 0
 
@@ -29,20 +29,11 @@ class ChessAI:
                 else:
                     evaluation -= value
 
-        # Оценка развития фигур
-        development_evaluation = len(
-            list(board.legal_moves)
-        )  # Можно использовать другие метрики для оценки развития, например, активность фигур
+        development_evaluation = len(list(board.legal_moves))
 
-        # Оценка защиты
-        defense_evaluation = 0  # Нужно разработать алгоритм оценки защиты
+        defense_evaluation = self.evaluate_defense(board)
+        threats_evaluation = self.evaluate_threats(board)
 
-        # Оценка угроз и возможных атак
-        threats_evaluation = (
-            0  # Нужно разработать алгоритм обнаружения возможных угроз и атак
-        )
-
-        # Итоговая оценка - сумма всех оценок
         final_evaluation = (
             evaluation
             + development_evaluation
@@ -80,6 +71,40 @@ class ChessAI:
         board.push(best_move)
         return best_move
 
+    def evaluate_defense(self, board):
+        defense_evaluation = 0
+        for square in chess.SQUARES:
+            piece = board.piece_at(square)
+            if (
+                piece is not None and piece.color == chess.BLACK
+            ):  # Adjusted for playing as black
+                # Check if the piece is defended by another black piece
+                defenders = list(board.attackers(chess.WHITE, square))
+
+                # Reward the piece if it is defended
+                if len(defenders) > 0:
+                    defense_evaluation += (
+                        20  # Adjust the reward based on your preference
+                    )
+        return defense_evaluation
+
+    def evaluate_threats(self, board):
+        threats_evaluation = 0
+        for square in chess.SQUARES:
+            piece = board.piece_at(square)
+            if (
+                piece is not None and piece.color == chess.BLACK
+            ):  # Adjusted for playing as black
+                # Check if the piece is attacked by a white piece
+                attackers = list(board.attackers(chess.BLACK, square))
+
+                # Punish the piece if it is not protected
+                if len(attackers) > 0:
+                    threats_evaluation -= (
+                        30  # Adjust the punishment based on your preference
+                    )
+        return threats_evaluation
+
     def minimax(self, board, depth, alpha, beta, maximizing_player):
         if depth == 0 or board.is_game_over():
             return self.evaluate_board(board)
@@ -108,9 +133,7 @@ class ChessAI:
             return min_evaluation
 
     def get_move(self):
-        return self.get_best_move(
-            self.board, 3, False
-        )  # примерное значение глубины поиска
+        return self.get_best_move(self.board, 3, False)
 
     def is_game_over(self):
         return not self.board.has_legal_moves()
