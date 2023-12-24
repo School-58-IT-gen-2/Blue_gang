@@ -69,3 +69,65 @@
   background-color: white; /* Белый фон при наведении */
   color: black; /* Черный цвет текста при наведении */
 }
+
+
+@media screen and (orientation: portrait) and (max-width: 500px) {
+  #title {
+    color: #d3d3d3; /* Цвет текста */
+    font-size: 15pt; /* Размер шрифта */
+    position: absolute;
+    top: 8vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+  }
+
+  #id {
+    margin-bottom: 30px;
+    text-align: center;
+    color: #d3d3d3; /* Цвет текста */
+    font-size: 50pt; /* Размер шрифта */
+    display: block;
+    margin-top: -80px;
+    margin-left: auto;
+  }
+
+  #id {
+    position: fixed;
+    /* display: none; */
+  }
+
+  rect {
+    display: none;
+  }
+
+  svg {
+    display: none;
+    /* position: fixed;
+    left: -20px;
+    top: 10px;
+    width: 200px;
+    height: 200px; */
+  }
+
+  .textDiv {
+    margin-top: 60vh;
+    margin-left: 48vw;
+  }
+
+  #toMainPageButton {
+    left: 49vw;
+    width: 300px;
+    height: 50px;
+    padding: 4px;
+  }
+
+  #copy {
+    position: fixed;
+    left: 49vw;
+    width: 300px;
+    height: 50px;
+    padding: 4px;
+    left: -29px; 
+    top: 10px;
+  }
+}
