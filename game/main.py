@@ -7,7 +7,7 @@ import os
 from pybaseconv import Converter, BASE
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import game.ai_for_chess.ai as ai
+import game.ai as ai
 
 COLUMNS_TO_LETTERS = {
     "0": "a",
