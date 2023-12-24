@@ -36,7 +36,7 @@ td:hover {
 }
 
 
-@media screen and (orientation: portrait) and (max-width: 500px) {
+@media screen and (orientation: portrait) and (max-width: 600px) {
   #chessboard_div {
     display: flex;
     position: absolute;
