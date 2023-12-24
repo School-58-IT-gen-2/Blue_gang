@@ -134,7 +134,13 @@ function move(first, second) {
       }
 
       if (type == "mate") {
-        window.location.href = "/win";
+        sendMessage("get_move_color").then((moveColorResult) => {
+          if (moveColorResult.message == 'black'){
+            window.location.href = "win?winner=white";
+          }else{
+            window.location.href = "win?winner=black";
+          }
+        })
       } else {
         ai_move();
       }
