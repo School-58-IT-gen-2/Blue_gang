@@ -1,3 +1,4 @@
 .env
 saves/*
 env/
+.venv/
