@@ -1,14 +1,9 @@
 import json
-
 import logging
 
-
 from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, Update, WebAppInfo
-
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
-
-# Enable logging
 
 logging.basicConfig(
 
