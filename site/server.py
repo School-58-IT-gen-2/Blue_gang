@@ -9,12 +9,12 @@ import os
 import time
 import colorama
 from pathlib import Path
-
+from configuration.default_configuration import DefaultConfig
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from game.main import *
 
 colorama.init()
-
+default_config = DefaultConfig()
 app = Flask(__name__)
 CORS(app)
 
@@ -71,7 +71,7 @@ def uploaded_res(filename):
 @app.route("/get_save/<id>", methods=["GET"])
 def upload_json_data(id):
     if id == "default":
-        data = open("default.json", "r").read()
+        data = default_config.get_default()
     else:
         data = open(f"saves/{id}.json", "r").read()
 
