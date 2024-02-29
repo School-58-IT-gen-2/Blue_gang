@@ -24,7 +24,14 @@ class Adapter():
         cursor.execute(request)
         data = cursor.fetchall()
         return data
-    
+
+    def get_by_id(self, requeste, table, id):
+        request = f'SELECT {requeste} FROM "Blue_project"."{table} WHERE id={id}"'
+        cursor = self.conn.cursor()
+        cursor.execute(request)
+        data = cursor.fetchall()
+        return data
+
     def update(self, table, request, id):
         request_update = f'UPDATE "Blue_project"."{table}" SET {request} WHERE id={id}'
         cursor = self.conn.cursor()
@@ -40,4 +47,4 @@ class Adapter():
 db = Adapter()
 db.update("users",'"username"=\'werwer1\', "password"=\'1234t\' ,"mail" = \'werwer2@wer\', "rating"=15342, created=333333', '1')
 #db.insert("users", 'id, "username", "password", "mail", "rating", "created"', "DEFAULT ,\'werwer2\', \'werwer2\', \'werwer2\' , 123, 1233")
-print(db.get("*",'users'))
+print(db.get_all("*",'users'))
