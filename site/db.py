@@ -27,8 +27,8 @@ class Adapter():
             print('connection error')
         self.cursor = self.conn.cursor()
         
-    def select(self, table):
-        request = f"""SELECT * FROM "{self.schema}"."{table}" """
+    def select_by_id(self, table, id):
+        request = f"""SELECT * FROM "{self.schema}"."{table}" WHERE id = {id}"""
         self.cursor.execute(request)
         data = self.cursor.fetchall()
         return data
@@ -56,6 +56,11 @@ class Adapter():
             request_insert = f"""INSERT INTO "{self.schema}"."{table}" ("{'","'.join(list(data[i].keys()))}") VALUES ({",".join(list(data[i].values()))})"""
             print(request_insert)
             self.cursor.execute(request_insert)
+        self.conn.commit()
+    
+    def delete_by_id(self,table,id):
+        request_delete = f"""DELETE FROM "{self.schema}"."{table}" WHERE id = {id}"""
+        self.cursor.execute(request_delete)
         self.conn.commit()
 class CSV():
     def __init__(self,csv_path):
