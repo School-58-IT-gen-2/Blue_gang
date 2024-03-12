@@ -1,5 +1,0 @@
-C:/Users/User/source/repos/Blue_gang/AI/out/build/x64-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/source/repos/Blue_gang/AI/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/User/source/repos/Blue_gang/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir
-C:/Users/User/source/repos/Blue_gang/AI/out/build/x64-debug/AI/CMakeFiles/edit_cache.dir
-C:/Users/User/source/repos/Blue_gang/AI/out/build/x64-debug/AI/CMakeFiles/rebuild_cache.dir
