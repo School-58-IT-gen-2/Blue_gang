@@ -1,0 +1,6 @@
+{
+  "repos": [
+    "nlohmann/json/master",
+    "Merzlikin-Matvey/Base-converter/main"
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "turn": "white",
+  "figures": [
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "a2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "b2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "c2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "d2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "e2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "f2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "g2"
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "position": "h2"
+    },
+    {
+      "color": "white",
+      "name": "rook",
+      "position": "a1"
+    },
+    {
+      "color": "white",
+      "name": "knight",
+      "position": "b1"
+    },
+    {
+      "color": "white",
+      "name": "bishop",
+      "position": "c1"
+    },
+    {
+      "color": "white",
+      "name": "queen",
+      "position": "d1"
+    },
+    {
+      "color": "white",
+      "name": "king",
+      "position": "e1"
+    },
+    {
+      "color": "white",
+      "name": "bishop",
+      "position": "f1"
+    },
+    {
+      "color": "white",
+      "name": "knight",
+      "position": "g1"
+    },
+    {
+      "color": "white",
+      "name": "rook",
+      "position": "h1"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "a7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "b7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "c7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "d7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "e7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "f7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "g7"
+    },
+    {
+      "color": "black",
+      "name": "pawn",
+      "position": "h7"
+    },
+    {
+      "color": "black",
+      "name": "rook",
+      "position": "a8"
+    },
+    {
+      "color": "black",
+      "name": "knight",
+      "position": "b8"
+    },
+    {
+      "color": "black",
+      "name": "bishop",
+      "position": "c8"
+    },
+    {
+      "color": "black",
+      "name": "queen",
+      "position": "d8"
+    },
+    {
+      "color": "black",
+      "name": "king",
+      "position": "e8"
+    },
+    {
+      "color": "black",
+      "name": "bishop",
+      "position": "f8"
+    },
+    {
+      "color": "black",
+      "name": "knight",
+      "position": "g8"
+    },
+    {
+      "color": "black",
+      "name": "rook",
+      "position": "h8"
+    }
+  ]
+}
