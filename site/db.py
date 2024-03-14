@@ -81,8 +81,10 @@ class CSV():
                     pass
         return res
 
-db = Adapter(schema="Galactic Empire",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
-csv = CSV(r'C:\Users\Степан\OneDrive\Рабочий стол\Python\Blue_gang\site\cruisers.csv')
+db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+csv = CSV(r'C:\Users\Степан\OneDrive\Рабочий стол\Python\Blue_gang\site\users.csv')
 data = csv.get_data_from_csv()
 print(data)
-db.insert_batch(table="Cruisers",data=data)
+db.insert_batch(table="users",data=data)
+
+#прошу не запускать потому что сериал переменная в айдишнике
