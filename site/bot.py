@@ -1,7 +1,17 @@
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, filters,MessageHandler, CallbackContext
+import logging
 import psycopg2
 import time
+
+logging.basicConfig(
+
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+
+)
+
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
 
 class Adapter():
 
@@ -75,7 +85,7 @@ def update_database(update: Update):
     username = update.effective_user.username
     now = int(time.time())
     
-    db.cursor.execute("SELECT * FROM user_data WHERE user_id = %s", (user_id))
+    db.cursor.execute(f'SELECT * FROM "Blue_project".tg_users WHERE user_id = {user_id}')
     existing_user = db.cursor.fetchone()
     
     if existing_user:
@@ -100,10 +110,10 @@ def echo(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
     
-    updater = Updater("")
+    updater = Updater("6778508485:AAFJlPgOCSza5DSwNR2iov_ph7FCBa2MOiU")
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler('start',start))
-    dp.add_handler(MessageHandler(filters.text & ~filters.command, echo))
+    #dispatcher.add_handler(MessageHandler(filters.text & ~filters.command, echo))
     updater.start_polling()
     updater.idle()
 
@@ -112,4 +122,3 @@ if __name__ == '__main__':
     main()
 
 
-# чёто я нафидил с ботом и не оч работает
