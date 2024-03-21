@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, filters,MessageHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, filters ,MessageHandler, CallbackContext
 import logging
 import psycopg2
 import time
@@ -85,15 +85,16 @@ def update_database(update: Update):
     username = update.effective_user.username
     now = int(time.time())
     
-    db.cursor.execute(f'SELECT * FROM "Blue_project".tg_users WHERE user_id = {user_id}')
+    db.cursor.execute("""SELECT * FROM "Blue_project"."tg_users" WHERE user_id = %s""", ([user_id]))
     existing_user = db.cursor.fetchone()
-    
+    print(existing_user)
+    print(chat_id,user_id,now,username,now)
     if existing_user:
-        db.update("tg_users",f"updated = {now}",f"user_id = {user_id}")
-    else:
-        db.insert("tg_users",{"chat_id": chat_id, "user_id": user_id, "username": username, "created": now, "updated": now})
-    
-
+        db.cursor.execute("""UPDATE "Blue_project"."tg_users" SET updated = %s WHERE user_id = %s""", (now, user_id))
+    elif existing_user==None:
+        db.cursor.execute("""INSERT INTO "Blue_project"."tg_users" (user_id, chat_id, username, created, updated) VALUES (%s, %s, %s, %s, %s)""",
+                       (user_id, chat_id, username, now, now))
+    db.conn.commit()
 # Обработчик команды /start
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Привет! Добро пожаловать!')
@@ -103,8 +104,6 @@ def start(update: Update, context: CallbackContext) -> None:
 
 # Обработчик всех входящих сообщений
 def echo(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text(update.message.text)
-
     # Обновляем данные при каждом контакте с пользователем
     update_database(update)
 
@@ -113,12 +112,11 @@ def main() -> None:
     updater = Updater("6778508485:AAFJlPgOCSza5DSwNR2iov_ph7FCBa2MOiU")
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler('start',start))
-    #dispatcher.add_handler(MessageHandler(filters.text & ~filters.command, echo))
+    dispatcher.add_handler(MessageHandler(filters.Filters.text, echo))
     updater.start_polling()
     updater.idle()
 
-
 if __name__ == '__main__':
     main()
-
+print(filters.Filters)
 
