@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ваш аккаунт</title>
+</head>
+<body>
+    <h1>Данные:</h1>
+    <ul>
+        {% for data in data_list %}
+            <li>{{ data }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
