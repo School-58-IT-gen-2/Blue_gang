@@ -1,0 +1,5 @@
+version: '3'
+services:
+  old_project:
+    image: old_project-image:0.0.1
+    container_name: old_project
