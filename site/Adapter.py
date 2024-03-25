@@ -63,3 +63,5 @@ class Adapter():
         request_delete = f"""DELETE FROM "{self.schema}"."{table}" WHERE id = {id}"""
         self.cursor.execute(request_delete)
         self.conn.commit()
+    def __del__(self):
+        self.conn.close() 

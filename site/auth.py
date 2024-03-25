@@ -1,4 +1,3 @@
-import psycopg2
 from flask import Flask, request, jsonify, render_template, session
 #from werkzeug.security import generate_password_hash, check_password_hash
 from Adapter import Adapter
@@ -25,45 +24,68 @@ def login_page():
 
 @app.route('/register', methods=['POST'])
 def register_user():
+    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}'")
     if not(user):
         db.insert("users","username, password",f"'{username}', '{password}'")
-        return jsonify({'message': 'User registered successfully'})
+        del db
+        return render_template('login.html')
     else:
-        return jsonify({'message': 'Username is taken'})
+        return render_template('registration.html',data="Имя пользователя занято!")
 
 @app.route('/login', methods=['POST'])
 def login_user():
+    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}' AND password = '{password}'")
-    
+    print(user)
     if user:
+        session.pop('id',None)
         session['id'] = str(db.select_sth_by_condition(sth="id",table="users",condition=f"username = '{username}' AND password = '{password}'"))[2:-3]
-        print(session.get('id'))
-        return jsonify({'message': 'Login successful'})
+        data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {session.get('id')}")
+        del db
+        return render_template('account.html',data_list=data_list)
     else:
-        return jsonify({'message': 'Invalid credentials'})
+        return render_template('login.html',data="Неверное имя пользователя или пароль")
 
 @app.route('/account')
 def account_info():
     id = session.get('id')
+    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
-        return render_template('account.html',data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {id}"))
+        data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {id}")
+        return render_template('account.html',data_list=data_list)
     else:
         return render_template('login.html')
 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
     id = session.get('id')
+    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
         db.delete_by_id(table="users",id=id)
         session.pop('id',None)
+        del db
         return jsonify({'message': "user deleted sucessfuly"})
     else:
-        return render_template('/login')
+        return render_template('login.html')
+
+@app.route('/change_username',methods=['POST','GET'])
+def usrchng_loadpage():
+    return render_template('usernamechange.html')
+
+@app.route('/usrchng', methods=['POST'])
+def username_change():
+    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    username = request.form['username']
+    id = session.get('id')
+    db.update(table="users",request=f"username = '{username}'",id=id)
+    data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {id}")
+    del db
+    return render_template('account.html',data_list=data_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
