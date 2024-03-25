@@ -15,7 +15,9 @@
   </head>
 
   <body>
-    <button id="startGameButton" class="button">Начать новую игру</button>
+    <button id="startGameButton" class="button">Начать игру с ботом</button>
+    <button id="newGameButton" class="button">Создать комнату</button>
+    <button id="enterGameButton" class="button">Войти</button>
 
     <input type="text" id="inputCode" placeholder="Введите код другой игры" />
   </body>
@@ -29,6 +31,9 @@
       window.location.href = "game";
     });
 
+    newGameButton.addEventListener("click", function () {
+      window.location.href = "new";
+    });
     // При нажатии на enter начинается игра с заданным кодом
     inputCode.addEventListener("keyup", function (event) {
       if (event.key === "Enter") {
