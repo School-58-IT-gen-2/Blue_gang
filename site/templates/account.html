@@ -6,7 +6,7 @@
 <title>Ваш аккаунт</title>
 </head>
 <body>
-    <h1>Данные:</h1>
+    <h1>Данные пользователя:</h1>
     <ul>
         {% for data in data_list %}
             <li>{{ data }}</li>
@@ -14,6 +14,9 @@
     </ul>
     <form action="/change_username">
         <button type="submit">Сменить имя пользователя</button>
+    </form>
+    <form action="/logout" method="POST">
+        <button type="submit">Выйти</button>
     </form>
 </body>
 </html>

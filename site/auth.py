@@ -51,7 +51,7 @@ def login_user():
     else:
         return render_template('login.html',data="Неверное имя пользователя или пароль")
 
-@app.route('/account')
+@app.route('/account',methods=["POST","GET"])
 def account_info():
     id = session.get('id')
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
@@ -87,5 +87,13 @@ def username_change():
     del db
     return render_template('account.html',data_list=data_list)
 
+@app.route('/',methods=["GET","POST"])
+def mainpage():
+    return render_template('mainpage_test.html')
+
+@app.route('/logout',methods=["POST"])
+def logout():
+    session.pop('id',None)
+    return render_template('login.html')
 if __name__ == '__main__':
     app.run(debug=True)
