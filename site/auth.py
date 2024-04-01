@@ -1,9 +1,8 @@
 from flask import Flask, request, jsonify, render_template, session
-#from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from Adapter import Adapter
 
 db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
-
 
 app = Flask(__name__)
 app.secret_key = 'dasoida327163821'
@@ -29,7 +28,7 @@ def register_user():
     password = request.form['password']
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}'")
     if not(user):
-        db.insert("users","username, password",f"'{username}', '{password}'")
+        db.hash_insert(username=username,password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
         del db
         return render_template('login.html')
     else:
@@ -40,12 +39,13 @@ def login_user():
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
-    user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}' AND password = '{password}'")
-    print(user)
-    if user:
+    user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}' ")
+    user = list(str(user).split(", "))
+    check = check_password_hash(user[2][1:-3],password)
+    if user and check:
         session.pop('id',None)
-        session['id'] = str(db.select_sth_by_condition(sth="id",table="users",condition=f"username = '{username}' AND password = '{password}'"))[2:-3]
-        data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {session.get('id')}")
+        session['id'] = user[0][2:]
+        data_list=db.select_sth_by_condition(sth="username",table="users",condition=f"id = {session.get('id')}")
         del db
         return render_template('account.html',data_list=data_list)
     else:
@@ -56,7 +56,7 @@ def account_info():
     id = session.get('id')
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
-        data_list=db.select_sth_by_condition(sth="*",table="users",condition=f"id = {id}")
+        data_list=db.select_sth_by_condition(sth="username",table="users",condition=f"id = {id}")
         return render_template('account.html',data_list=data_list)
     else:
         return render_template('login.html')

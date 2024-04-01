@@ -45,6 +45,10 @@ class Adapter():
         self.cursor.execute(request_insert)
         self.conn.commit()
 
+    def hash_insert(self,username,password):
+        self.cursor.execute('INSERT INTO "Blue_project"."users" (username, password) VALUES (%s, %s)', (username, password))
+        self.conn.commit()
+    
     def insert_batch(self,table,data):
         for row in data:
             for key, value in row.items():
