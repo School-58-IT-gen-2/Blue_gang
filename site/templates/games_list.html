@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Игры</title>
+</head>
+<body>
+    <h1>Список ваших игр:</h1>
+    <ul>
+        {% for game in games %}
+            <li>{{ game }} <a href="/game"><button>Играть</button></a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
