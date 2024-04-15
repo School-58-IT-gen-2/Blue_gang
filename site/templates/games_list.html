@@ -7,8 +7,16 @@
     <h1>Список ваших игр:</h1>
     <ul>
         {% for game in games %}
-            <li>{{ game }} <a href="/game"><button>Играть</button></a></li>
+        <button id="startGameButton" data-game-id="{{ game }}"  class="button">Продолжить игру {{ game }}</button>
         {% endfor %}
     </ul>
 </body>
+<script>
+    document.querySelectorAll("#startGameButton").forEach(function(button) {
+    button.addEventListener("click", function () {
+        var gameId = button.getAttribute("data-game-id");
+        window.location.href = "game?id=" + gameId;
+    });
+});
+</script>
 </html>

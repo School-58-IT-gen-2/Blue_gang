@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, session
+from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from Adapter import Adapter
 
@@ -92,18 +92,19 @@ def username_change():
     return render_template('account.html',data_list=data_list)
 
 @app.route('/games_list', methods=["POST","GET"])
-def list_of_games():
+def games_list():
     id = session.get('id')
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
         games = str(db.select_sth_by_condition(sth="game_id",table="games",condition=f"pl1_id = {id} OR pl2_id = {id}"))
         del db
-        print(games)
-        games = games[2:-2].split(",")
+        games = games[2:-3].split(",), (")
         print(games)
         return render_template('games_list.html',games=games)
     else:
         return render_template('login.html')
+
+
 
 @app.route('/logout',methods=["POST"])
 def logout():
