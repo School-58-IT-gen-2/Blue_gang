@@ -4,7 +4,7 @@ from Adapter import Adapter
 
 db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'dasoida327163821'
 
 @app.route('/registration',methods=['POST','GET'])
@@ -21,7 +21,7 @@ def login_page():
 
 @app.route('/',methods=["GET","POST"])
 def mainpage():
-    return render_template('mainpage_test.html')
+    return render_template('chess_main.html')
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -104,7 +104,9 @@ def games_list():
     else:
         return render_template('login.html')
 
-
+@app.route('/test',methods=["GET"])
+def test():
+    return render_template('chess_main.html')
 
 @app.route('/logout',methods=["POST"])
 def logout():
