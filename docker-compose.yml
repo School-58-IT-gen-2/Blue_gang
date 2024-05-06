@@ -1,5 +1,8 @@
 version: '3'
 services:
-  old_project:
-    image: old_project-image:0.0.1
-    container_name: old_project
+  hello_logic:
+    image: chess_project:0.0.2
+    container_name: Project_container
+    command: 'python ./site/server.py'
+    ports: 
+      - '5000:5000'

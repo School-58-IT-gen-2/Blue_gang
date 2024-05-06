@@ -11,22 +11,24 @@ class Adapter():
         self.target_session_attrs=target_session_attrs
         self.schema = schema
         self.connect()
-        
+    def __del__(self):
+        self.conn.close() 
     def connect(self):
         try:
             self.conn = psycopg2.connect(f"""
                 host={self.host}
                 port={self.port}
-                sslmode={self.sslmode}
                 dbname={self.dbname}
                 user={self.user}
                 password={self.password}
                 target_session_attrs={self.target_session_attrs}
             """)
-        except:
-            print('connection error')
-        self.cursor = self.conn.cursor()
-        return self.conn
+        except Exception as error:
+            print(f'connection error: {error}')
+            exit(0)
+        finally:
+            self.cursor = self.conn.cursor()
+            return self.conn
         
     def select_sth_by_condition(self, sth, table, condition):
         request = f"""SELECT {sth} FROM "{self.schema}"."{table}" WHERE {condition}"""
@@ -67,5 +69,4 @@ class Adapter():
         request_delete = f"""DELETE FROM "{self.schema}"."{table}" WHERE id = {id}"""
         self.cursor.execute(request_delete)
         self.conn.commit()
-    def __del__(self):
-        self.conn.close() 
+    
