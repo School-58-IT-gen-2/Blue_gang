@@ -209,7 +209,7 @@ def register_user():
     if not(user):
         db.hash_insert(username=username,password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
         del db
-        return render_template('login.html')
+        return redirect(url_for('login_page'),302)
     else:
         return render_template('registration.html',data="Имя пользователя занято!")
 
@@ -227,7 +227,7 @@ def login_user():
             session['id'] = user[0][2:]
             data_list=db.select_sth_by_condition(sth="id, username",table="users",condition=f"id = {session.get('id')}")
             del db
-            return render_template('account.html',data_list=data_list)
+            return redirect(url_for('account_info'))
     else:
         return render_template('login.html',data="Неверное имя пользователя или пароль")
 
@@ -237,10 +237,10 @@ def account_info():
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
         data_list=db.select_sth_by_condition(sth="id, username",table="users",condition=f"id = {id}")
-        print(data_list)
+
         return render_template('account.html',data_list=data_list)
     else:
-        return render_template('login.html')
+        return redirect(url_for('login_page'),302)
 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
@@ -250,9 +250,9 @@ def delete_account():
         db.delete_by_id(table="users",id=id)
         session.pop('id',None)
         del db
-        return jsonify({'message': "user deleted sucessfuly"})
+        return redirect(url_for('login_page'),302)
     else:
-        return render_template('login.html')
+        return redirect(url_for('login_page'),302)
 
 @app.route('/change_username',methods=['POST','GET'])
 def usrchng_loadpage():
@@ -262,11 +262,17 @@ def usrchng_loadpage():
 def username_change():
     db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
+    password = request.form['password']
     id = session.get('id')
-    db.update(table="users",request=f"username = '{username}'",id=id)
-    data_list=db.select_sth_by_condition(sth="id, username",table="users",condition=f"id = {id}")
-    del db
-    return render_template('account.html',data_list=data_list)
+    user = db.select_sth_by_condition(sth="*",table="users",condition=f"id = '{id}' ")
+    user = list(str(user).split(", "))
+    check = check_password_hash(user[2][1:-3],password)
+    if check:
+        db.update(table="users",request=f"username = '{username}'",id=id)
+        del db
+        return redirect(url_for('account_info'),302)
+    else:
+        return render_template('usernamechange.html',data="Неверный пароль")
 
 @app.route('/games_list', methods=["POST","GET"])
 def games_list():
@@ -276,19 +282,14 @@ def games_list():
         games = str(db.select_sth_by_condition(sth="game_id",table="games",condition=f"pl1_id = {id} OR pl2_id = {id}"))
         del db
         games = games[2:-3].split(",), (")
-        print(games)
         return render_template('games_list.html',games=games)
     else:
-        return render_template('login.html')
-
-@app.route('/test',methods=["GET"])
-def test():
-    return render_template('chess_main.html')
+        return redirect(url_for('login_page'),302)
 
 @app.route('/logout',methods=["POST"])
 def logout():
     session.pop('id',None)
-    return render_template('login.html')
+    return redirect(url_for('login_page'),302)
 
 if __name__ == "__main__":
     PORT = 5000

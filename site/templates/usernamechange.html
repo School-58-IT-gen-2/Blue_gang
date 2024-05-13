@@ -8,9 +8,11 @@
 </head>
 <body>
     <form action="/usrchng" method="POST">
+        <label for="username">Ваш текущий пароль:</label><br>
+        <input type="text" id = "password" name="password"><br><br>
         <label for="username">Новое имя пользователя:</label><br>
-        <input type="text" id="username" name="username"><br><br>
-        
+        <input type="text" id="username" name="username" maxlength="35"><br><br>
+        <h3>{{ data }}</h1><br>
         <button type="submit">Сменить имя пользователя</button>
     </form>
 </body>
