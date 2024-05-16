@@ -36,6 +36,12 @@ class Adapter():
         data = self.cursor.fetchall()
         return data
 
+    def select_sth(self, sth, table):
+        request = f"""SELECT {sth} FROM "{self.schema}"."{table}" """
+        self.cursor.execute(request)
+        data = self.cursor.fetchall()
+        return data
+    
     def update(self, table, request, id):
         request_update = f'UPDATE "{self.schema}"."{table}" SET {request} WHERE id={id}'
         cursor = self.conn.cursor()

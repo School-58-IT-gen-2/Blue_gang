@@ -267,11 +267,21 @@ def username_change():
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"id = '{id}' ")
     user = list(str(user).split(", "))
     check = check_password_hash(user[2][1:-3],password)
+    list_of_names = db.select_sth(sth="username",table="users")
+    for i in range(len(list_of_names)):
+        list_of_names[i]=str(list_of_names[i])[2:-3]
+    print(list_of_names)
+    print(username)
     if check:
-        db.update(table="users",request=f"username = '{username}'",id=id)
-        del db
-        return redirect(url_for('account_info'),302)
+        if username in list_of_names:
+            del db
+            return render_template('usernamechange.html',data="Имя пользователя занятно")
+        else:
+            db.update(table="users",request=f"username = '{username}'",id=id)
+            del db
+            return redirect(url_for('account_info'),302)
     else:
+        del db
         return render_template('usernamechange.html',data="Неверный пароль")
 
 @app.route('/games_list', methods=["POST","GET"])
