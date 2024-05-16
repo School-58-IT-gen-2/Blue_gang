@@ -270,8 +270,6 @@ def username_change():
     list_of_names = db.select_sth(sth="username",table="users")
     for i in range(len(list_of_names)):
         list_of_names[i]=str(list_of_names[i])[2:-3]
-    print(list_of_names)
-    print(username)
     if check:
         if username in list_of_names:
             del db
@@ -300,6 +298,10 @@ def games_list():
 def logout():
     session.pop('id',None)
     return redirect(url_for('login_page'),302)
+
+@app.route('/choose_gamemode',methods=["POST","GET"])
+def choose_gamemode():
+    return render_template('gamemode_choose.html')
 
 if __name__ == "__main__":
     PORT = 5000

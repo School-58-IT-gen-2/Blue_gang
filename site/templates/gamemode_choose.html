@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chess_main.css') }}">
-
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gamemode_choose.css') }}">
 </head>
 <body>
 
@@ -24,12 +22,12 @@
     <div class="container">
         <div class="header__wrapper">
             <a href="#" class="logo">
-                <img src="../static/assets/logo.png" alt="logo">
+                <img src="assets/logo.png" alt="logo">
             </a>
             
             <div class="header__block">
                 <nav class="nav">
-                    <a href="#" class="nav__link active">
+                    <a href="#" class="nav__link">
                         Home
                     </a>
                     <a href="#" class="nav__link">
@@ -43,8 +41,8 @@
 
             <div class="header__block">
                 <div class="header__actions">
-                    <a href="/account" class="header__link">
-                        <img src="../static/assets/autorisation.svg" alt="autorisation">
+                    <a href="#" class="header__link">
+                        <img src="assets/autorisation.svg" alt="autorisation">
                     </a>
                 </div>
             </div>
@@ -52,24 +50,24 @@
         </div>
     </div>
 </header>
-
-<div class="intro">
+<div class="choose__mode-banner">
     <div class="container">
-        <div class="intro__wrapper">
-            <div class="intro__block">
-                <h1 class="intro__title">WELCOME!</h1>
-                <p class="intro__text">
-                    This is a site for playing chess with AI.
-                    Press start to play game.
-                </p>
-                <div class="intro__actions">
-                    <a href="/choose_gamemode" class="btn btn-main">
-                        start
-                    </a>
-                </div>
+        <h1 class="choose__mode-title">CHOOSE YOUR MODE:</h1>
+        <div class="choose__mode-wrapper">
+            <div class="choose__mode-wrappermode">
+                <h2 class="choose__mode-titlle">pvp (wip)</h2>
+                <p class="paragraph">The AI in PVE mode is designed to provide a perfect level of difficulty, making each game a thrilling experience.</p>
+                <a href="#" class="btn-main btn choose">choose</a>
+            </div>
+            <div class="choose__mode-wrappermode margin">
+                <h2 class="choose__mode-titlle margin">pve</h2>
+                <p class="paragraph margin">The AI in PVE mode is designed to provide a perfect level of difficulty, making each game a thrilling experience.</p>
+                <a href="/GameSelect" class="btn-main btn choose">choose</a>
             </div>
         </div>
     </div>
+
+
 </div>
 
 </body>
