@@ -1,7 +1,7 @@
 let data;
 
 if (window.location.protocol === "https:") {
-  data = "https://chess.projectalpha.ru/game?id=" + id;
+  data = "https://blue-team.khromdev.ru/game?id=" + id;
 } else {
   data = "localhost:5000/game?id=" + id;
 }

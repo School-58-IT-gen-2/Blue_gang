@@ -3,7 +3,7 @@ let numOfMessages = 1;
 
 function setSocket() {
   if (window.location.protocol === "https:") {
-    socket = io.connect("https://chess.projectalpha.ru", {
+    socket = io.connect("https://blue-team.khromdev.ru", {
       secure: true,
       forceNew: true,
       transports: ["polling"],

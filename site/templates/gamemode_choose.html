@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Main page</title>
+    <title>Choose gamemode</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/gamemode_choose.css') }}">
 </head>
 <body>
@@ -22,12 +22,12 @@
     <div class="container">
         <div class="header__wrapper">
             <a href="#" class="logo">
-                <img src="assets/logo.png" alt="logo">
+                <img src="../static/assets/logo.png" alt="logo">
             </a>
             
             <div class="header__block">
                 <nav class="nav">
-                    <a href="#" class="nav__link">
+                    <a href="/home" class="nav__link">
                         Home
                     </a>
                     <a href="#" class="nav__link">
@@ -41,8 +41,8 @@
 
             <div class="header__block">
                 <div class="header__actions">
-                    <a href="#" class="header__link">
-                        <img src="assets/autorisation.svg" alt="autorisation">
+                    <a href="/account" class="header__link">
+                        <img src="../static/assets/autorisation.svg" alt="autorisation">
                     </a>
                 </div>
             </div>

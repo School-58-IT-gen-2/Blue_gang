@@ -28,7 +28,7 @@ function loadData(code) {
   let URLforRequest;
 
   if (window.location.protocol === "https:") {
-    URLforRequest = "https://chess.projectalpha.ru";
+    URLforRequest = "https://blue-team.khromdev.ru";
   } else {
     URLforRequest = "http://127.0.0.1:5000";
   }

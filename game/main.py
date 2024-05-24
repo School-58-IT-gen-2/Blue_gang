@@ -52,7 +52,7 @@ def translate_position(column, row):
 
 
 def save_board_fen(name_file):
-    with open(f"saves/{name_file}.json", "r", encoding="utf-8") as file:
+    with open(f"game/saves/{name_file}.json", "r", encoding="utf-8") as file:
         board_data = json.load(file)
 
     board = Board()
@@ -159,7 +159,7 @@ def save_board_json(board):
 
     file_name = f"{name_file}.json"
 
-    with open("saves/" + file_name, "w") as file:
+    with open(r"game/saves/" + file_name, "w") as file:
         json.dump(board_data, file, indent=2)
 
     return name_file

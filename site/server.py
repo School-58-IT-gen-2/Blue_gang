@@ -22,7 +22,7 @@ app = Flask(__name__, static_folder='static')
 app.secret_key = 'dasoida327163821'
 CORS(app)
 
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 # Доступ к mainPage.html через url /. Остальные страницы ниже аналогично
@@ -41,6 +41,12 @@ def game():
 
 @app.route("/save")
 def save():
+    game_id = request.args.get('id')
+    user_id = session.get('id')
+    if user_id:
+        db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+        db.insert(table="games",columns="pl1_id,pl2_id,game_id",values=f"'{user_id}','{user_id}','{game_id}'")
+        del db
     return render_template("savePage.html")
 
 
@@ -78,9 +84,9 @@ def uploaded_res(filename):
 @app.route("/get_save/<id>", methods=["GET"])
 def upload_json_data(id):
     if id == "default":
-        data = open("default.json", "r").read()
+        data = open("site/default.json", "r").read()
     else:
-        data = open(f"saves/{id}.json", "r").read()
+        data = open(f"game/saves/{id}.json", "r").read()
 
     return jsonify(data)
 
@@ -179,14 +185,19 @@ def handle_message(message):
             )
 
         case "save":
+            game_id = save_board_json(board)
             socketio.emit(
                 "message_from_server",
-                {"id": message["id"], "message": save_board_json(board)},
+                {"id": message["id"], "message": game_id},
             )
 
 @app.route('/registration',methods=['POST','GET'])
 def registration_page():
     return render_template('registration.html')
+
+@app.route('/home')
+def go_home():
+    return redirect(url_for('mainpage'),302)
 
 @app.route('/deleting_user')
 def delete_page():
@@ -290,6 +301,9 @@ def games_list():
         games = str(db.select_sth_by_condition(sth="game_id",table="games",condition=f"pl1_id = {id} OR pl2_id = {id}"))
         del db
         games = games[2:-3].split(",), (")
+        for i in range(len(games)):
+            games[i] = games[i][1:-1]
+        print(games)
         return render_template('games_list.html',games=games)
     else:
         return redirect(url_for('login_page'),302)
@@ -305,13 +319,11 @@ def choose_gamemode():
 
 if __name__ == "__main__":
     PORT = 5000
-    ssl_context = (
-        "/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem",
-        "/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem",
-    )
+    ssl_context = ["/etc/letsencrypt/live/blue-team.khromdev.ru/fullchain.pem", "/etc/letsencrypt/live/blue-team.khromdev.ru/privkey.pem"]
+    print(Path(ssl_context[0]).is_file(),Path(ssl_context[0]).is_file())
     if Path(ssl_context[0]).is_file() and Path(ssl_context[1]).is_file():
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-        socketio.run(app, port=PORT, use_reloader=True, ssl_context=ssl_context)
+        socketio.run(app, port=PORT, use_reloader=True, ssl_context="adhoc", allow_unsafe_werkzeug=True, host="0.0.0.0")
     else:
         print(colorama.Fore.YELLOW + "Нет SSL сертификатов")
         time.sleep(1)
