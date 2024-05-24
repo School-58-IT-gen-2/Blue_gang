@@ -86,7 +86,10 @@ def upload_json_data(id):
     if id == "default":
         data = open("site/default.json", "r").read()
     else:
-        data = open(f"game/saves/{id}.json", "r").read()
+        try:
+            data = open(f"game/saves/{id}.json", "r").read()
+        except OSError:
+            data = open("site/default.json", "r").read()
 
     return jsonify(data)
 
@@ -101,7 +104,7 @@ def handle_message(message):
     match message["type"]:
         case "start":
             start_time = time.perf_counter()
-            if message["message"] == None:
+            if message["message"] == None or not(Path(f"game/saves/"+message["message"]+".json").is_file()):
                 session["board"] = Board()
             else:
                 boardb = save_board_fen(message["message"])
