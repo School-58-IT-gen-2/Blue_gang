@@ -1,8 +1,8 @@
 .env
-saves/*
 env/
 .venv/
-__pycache__/
 *.py[cod]
 *$py.class
 *.tar
+saves/*
+__pycache__/

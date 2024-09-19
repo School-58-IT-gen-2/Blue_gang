@@ -4,22 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ваш аккаунт</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Данные пользователя:</h1>
-    <ul>
-        {% for data in data_list %}
-            <li>{{ data }}</li>
-        {% endfor %}
-    </ul>
-    <form action="/games_list">
-        <button type="submit">Список ваших игр</button>
-    </form>
-    <form action="/change_username">
-        <button type="submit">Сменить имя пользователя</button>
-    </form>
-    <form action="/logout" method="POST">
-        <button type="submit">Выйти</button>
-    </form>
+    <header class="header"></header>
+        <div class="header__line">
+            <div class="container">
+                <div class="header_line-wrapper">
+                    <div class="header__lng">
+                        <a href="#">Ru</a>
+                        <a href="#" class="active">En</a>
+                    </div>
+                    <a class="header__phone" href="#">8 (800) 555-35-55</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header__wrapper">
+                <a href="#" class="logo">
+                    <img src="../static/assets/logo.png" alt="logo">
+                </a>
+                
+                <div class="header__block">
+                    <nav class="nav">
+                        <a href="/home" class="nav__link">
+                            Home
+                        </a>
+                        <a href="#" class="nav__link">
+                            About
+                        </a>
+                        <a href="#" class="nav__link">
+                            Settings
+                        </a>
+                    </nav>
+                </div>
+    
+                <div class="header__block">
+                    <div class="header__actions">
+                        <a href="/account" class="header__link">
+                            <img src="../static/assets/autorisation.svg" alt="autorisation">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Username: {{ data }}</h2>
+        <form action="/games_list">
+            <button type="submit" class="btn-choose">List of your games</button>
+        </form>
+        <form action="/change_username">
+            <button type="submit" class="btn-choose">Change username</button>
+        </form>
+        <form action="/logout" method="POST">
+            <button type="submit" class="btn-choose">Log out</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -52,10 +52,6 @@ class Adapter():
         request_insert = f"""INSERT INTO "{self.schema}"."{table}" ({columns}) VALUES ({values})"""
         self.cursor.execute(request_insert)
         self.conn.commit()
-
-    def hash_insert(self,username,password):
-        self.cursor.execute('INSERT INTO "Blue_project"."users" (username, password) VALUES (%s, %s)', (username, password))
-        self.conn.commit()
     
     def insert_batch(self,table,data):
         for row in data:

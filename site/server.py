@@ -41,11 +41,11 @@ def game():
 
 @app.route("/save")
 def save():
-    game_id = request.args.get('id')
+    game_code = request.args.get('id')
     user_id = session.get('id')
     if user_id:
-        db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
-        db.insert(table="games",columns="pl1_id,pl2_id,game_id",values=f"'{user_id}','{user_id}','{game_id}'")
+        db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+        db.insert(table="games",columns="pl1_id,pl2_id,game_code",values=f"'{user_id}','{user_id}','{game_code}'")
         del db
     return render_template("savePage.html")
 
@@ -188,10 +188,10 @@ def handle_message(message):
             )
 
         case "save":
-            game_id = save_board_json(board)
+            game_code = save_board_json(board)
             socketio.emit(
                 "message_from_server",
-                {"id": message["id"], "message": game_id},
+                {"id": message["id"], "message": game_code},
             )
 
 @app.route('/registration',methods=['POST','GET'])
@@ -216,56 +216,66 @@ def mainpage():
 
 @app.route('/register', methods=['POST'])
 def register_user():
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}'")
     if not(user):
-        db.hash_insert(username=username,password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8) 
+        hashed_password = str(hashed_password)[7:]
+        hashed_password = str(hashed_password)[7:]
+        print(hashed_password)
+        db.insert(table="users",columns="username, password",values=f" '{username}','{hashed_password}' ")  #c 7 символа для того, чтобы sql не жаловался на двоеточие в хеш пароле
         del db
         return redirect(url_for('login_page'),302)
     else:
+        del db
         return render_template('registration.html',data="Имя пользователя занято!")
 
 @app.route('/login', methods=['POST'])
 def login_user():
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
     user = db.select_sth_by_condition(sth="*",table="users",condition=f"username = '{username}' ")
     if user:
-        user = list(str(user).split(", "))
-        check = check_password_hash(user[2][1:-3],password)
+        hashed_password = str(db.select_sth_by_condition(sth="password",table="users",condition=f"username = '{username}' "))[3:-4]
+        check = check_password_hash("pbkdf2:sha256:"+hashed_password,password)
         if check:
             session.pop('id',None)
-            session['id'] = user[0][2:]
-            data_list=db.select_sth_by_condition(sth="id, username",table="users",condition=f"id = {session.get('id')}")
+            session['id'] = str(db.select_sth_by_condition(sth="id",table="users",condition=f"username = '{username}' "))[2:-3]
             del db
             return redirect(url_for('account_info'))
+        else:
+            del db
+            return render_template('login.html',data="Неверный пароль")
     else:
-        return render_template('login.html',data="Неверное имя пользователя или пароль")
+        del db
+        return render_template('login.html',data="Неверное имя пользователя")
 
 @app.route('/account',methods=["POST","GET"])
 def account_info():
     id = session.get('id')
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
-        data_list=db.select_sth_by_condition(sth="id, username",table="users",condition=f"id = {id}")
-
-        return render_template('account.html',data_list=data_list)
+        data=db.select_sth_by_condition(sth="username",table="users",condition=f"id = {id}")
+        del db
+        return render_template('account.html',data=str(data)[3:-4])
     else:
+        del db
         return redirect(url_for('login_page'),302)
 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
     id = session.get('id')
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
         db.delete_by_id(table="users",id=id)
         session.pop('id',None)
         del db
         return redirect(url_for('login_page'),302)
     else:
+        del db
         return redirect(url_for('login_page'),302)
 
 @app.route('/change_username',methods=['POST','GET'])
@@ -274,7 +284,7 @@ def usrchng_loadpage():
 
 @app.route('/usrchng', methods=['POST'])
 def username_change():
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     username = request.form['username']
     password = request.form['password']
     id = session.get('id')
@@ -299,9 +309,9 @@ def username_change():
 @app.route('/games_list', methods=["POST","GET"])
 def games_list():
     id = session.get('id')
-    db = Adapter(schema="Blue_project",host="rc1d-9cjee2y71olglqhg.mdb.yandexcloud.net",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
+    db = Adapter(schema="blue_gang_schema",host="85.208.86.99",port="6432",dbname="sch58_db",sslmode="verify-full",user="Admin",password="atdhfkm2024",target_session_attrs="read-write")
     if id:
-        games = str(db.select_sth_by_condition(sth="game_id",table="games",condition=f"pl1_id = {id} OR pl2_id = {id}"))
+        games = str(db.select_sth_by_condition(sth="game_code",table="games",condition=f"pl1_id = {id} OR pl2_id = {id}"))
         del db
         games = games[2:-3].split(",), (")
         for i in range(len(games)):

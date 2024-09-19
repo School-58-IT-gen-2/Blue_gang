@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Sign up</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>Main page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Регистрация</h2>
-    <form action="/register" method="POST">
-        <label for="username">Имя пользователя:</label><br>
-        <input type="text" id="username" name="username" maxlength="35"><br><br>
-        
-        <label for="password">Пароль:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        
-        <button type="submit">Зарегестрироваться</button>
-    </form>
-    <h3>{{ data }}</h1>
+    <div class="container">
+        <div class="return-btn"><a href="/account"><img src="{{ url_for('static', filename='assets/return-btn.svg') }}" alt="back"></a></div>
+        <div class="registration">
+            <h1 class="reg">Registration</h1>
+            <form action="/register" method="POST">
+                <input type="text" id="username" name="username" class="btn-registration" placeholder="Enter Name" maxlength="35"/><br><br>
+                
+                <input type="password" id="password" class="btn-registration" name="password" placeholder="Enter Password"/><br><br>
+                <button class="btn-register" type="submit">Sign up</button>
+            </form>
+            <h3>{{ data }}</h1>
+            </div>
+        </div>
 </body>
 </html>
