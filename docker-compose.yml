@@ -1,7 +1,7 @@
 version: '3'
 services:
   hello_logic:
-    image: chess_project:0.0.1
+    image: chess_project:0.0.2
     container_name: Project_container
     command: 'python ./site/server.py'
     ports: 
